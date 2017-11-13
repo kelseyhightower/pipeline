@@ -21,6 +21,13 @@ This tutorial will leverage [Cloud Container Builder](https://cloud.google.com/c
 
 ## Tutorial
 
+### Services
+
+The following services are required to complete this tutorial:
+
+* [GitHub](https://github.com)
+* [Google Cloud Platform](https://console.cloud.google.com/freetrial)
+
 ### Client Tools
 
 The following client tools are required to complete this tutorial:
@@ -52,6 +59,32 @@ gcloud container clusters create qa
 gcloud container clusters create production
 ```
 
+### Fork the pipeline repositories
+
+In this section you will fork the pipeline repositories using your GitHub account.
+
+Create a GitHub token: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line
+
+```
+GITHUB_TOKEN="<token>"
+```
+
+Capture your GitHub username:
+
+```
+GITHUB_USERNAME="<github-username>"
+```
+
+```
+cat <<EOF > ~/.config/hub
+github.com:
+  - protocol: https
+    user: ${GITHUB_USERNAME}
+    oauth_token: ${GITHUB_TOKEN}
+EOF
+```
+
+
 Create the pipeline keyring:
 
 ```
@@ -63,21 +96,6 @@ gcloud kms keys create github \
   --location=global \
   --keyring=pipeline \
   --purpose=encryption
-```
-
-Create a GitHub token: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line
-
-```
-GITHUB_TOKEN="<token>"
-```
-
-```
-cat <<EOF > hub
-github.com:
-  - protocol: https
-    user: ${GITHUB_USERNAME}
-    oauth_token: ${GITHUB_TOKEN}
-EOF
 ```
 
 ```
