@@ -72,17 +72,19 @@ Create a GitHub token using the official [guide](https://github.com/blog/1509-pe
 Save the token in the `GITHUB_TOKEN` env var:
 
 ```
-GITHUB_TOKEN="<token>"
+export GITHUB_TOKEN="<token>"
 ```
 
 Save your GitHub username in the `GITHUB_USERNAME` env var:
 
 ```
-GITHUB_USERNAME="<github-username>"
+export GITHUB_USERNAME="<github-username>"
 ```
 
+Create a hub configuration file:
+
 ```
-cat <<EOF > ~/.config/hub
+cat <<EOF > ~/.config/hub-pipeline
 github.com:
   - protocol: https
     user: ${GITHUB_USERNAME}
@@ -90,6 +92,41 @@ github.com:
 EOF
 ```
 
+Set the `HUB_CONFIG` env var to point to the pipeline hub configuration file:
+
+```
+HUB_CONFIG="~/.config/hub-pipeline"
+```
+
+Fork the pipeline repos:
+
+```
+hub clone https://github.com/kelseyhightower/pipeline-application.git
+cd pipeline-application/
+hub fork
+cd -
+```
+
+```
+hub clone https://github.com/kelseyhightower/pipeline-infrastructure-staging.git
+cd pipeline-infrastructure-staging/
+hub fork
+cd -
+```
+
+```
+hub clone https://github.com/kelseyhightower/pipeline-infrastructure-qa.git
+cd pipeline-infrastructure-qa/
+hub fork
+cd -
+```
+
+```
+hub clone https://github.com/kelseyhightower/pipeline-infrastructure-production.git
+cd pipeline-infrastructure-production/
+hub fork
+cd -
+```
 
 Create the pipeline keyring:
 
