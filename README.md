@@ -143,6 +143,16 @@ hub fork
 cd -
 ```
 
+At this point the pipeline repos have been forked to your GitHub account and can used as part of your own deployment pipeline.
+
+### Save the Hub Credentials to Google Cloud Storage
+
+In this section you will encrypt the hub credentials using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket.
+
+#### Create a KMS Keyring
+
+Before you can encrypt the hub credentials you need to create a KMS keyring.
+
 Create the pipeline keyring:
 
 ```
