@@ -10,7 +10,7 @@ gcloud container clusters create staging
 gcloud container clusters create qa
 ```
 
-``
+```
 gcloud container clusters create production
 ```
 
