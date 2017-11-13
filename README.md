@@ -1,5 +1,26 @@
 # pipeline
 
+The pipeline tutorial walks you through creating an end to end deployment pipeline for Kubernetes using [Cloud Container Builder](https://cloud.google.com/container-builder/).
+
+## The Application
+
+This tutorial will set up a pipeline to deploy the [pipeline application](https://github.com/kelseyhightower/pipeline-application), a simple Go application with the following HTTP endpoints:
+
+ * `/` - responds with "Hello world!"
+ * `/health` - responds with HTTP status code 200
+ * `/version` - responds with the application version (v2.0.0)
+
+## The Deployment Pipeline
+
+This tutorial will leverage [Cloud Container Builder](https://cloud.google.com/container-builder/) to set up the following pipeline:
+
+ * changes pushed to any branch except master on the [pipeline application](https://github.com/kelseyhightower/pipeline-application) repo will trigger a container build and a rolling deployment to a Kubernetes staging cluster.
+ * tags on the [pipeline application](https://github.com/kelseyhightower/pipeline-application) repo will trigger a container build based on the tag name and a rolling deployment to a Kubernetes QA cluster.
+ * successful deployments to QA will trigger a pull request the [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production) repo.
+ * changed pushed to the master branch on the `pipeline-infrastructure-production` repo will trigger a rolling deployment to a Kubernetes production cluster
+
+## Usage
+
 Create three GKE clusters:
 
 ```
