@@ -252,6 +252,22 @@ Copy the encrypted hub credentials file to the pipeline configs bucket:
 gsutil cp hub.enc gs://${PROJECT_ID}-pipeline-configs/
 ```
 
+#### Grant the Container Builder service account access to the github encryption key
+
+Store the GCP project number in the `PROJECT_NUMBER` env var:
+
+```
+PROJECT_NUMBER=$(gcloud projects describe ${PROJECT_ID} --format='value(projectNumber)')
+```
+
+```
+gcloud kms keys add-iam-policy-binding github \
+  --location=global \
+  --keyring=pipeline \
+  --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+  --role=roles/cloudkms.cryptoKeyEncrypterDecrypter
+```
+
 ### Create the Cloud Container Builder Build Triggers
 
 ```
