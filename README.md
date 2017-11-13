@@ -21,7 +21,7 @@ This tutorial will leverage [Cloud Container Builder](https://cloud.google.com/c
  * successful deployments to QA will trigger a pull request on the [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production) repo.
  * changes pushed to the master branch on the [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production) repo will trigger a rolling deployment to a Kubernetes production cluster.
 
- > The rolling update to the production cluster is gated with a pull request to the pipeline-infrastructure-production repo.
+ > The rolling update to the production cluster is gated by a pull request to the pipeline-infrastructure-production repo.
 
 ## Tutorial
 
