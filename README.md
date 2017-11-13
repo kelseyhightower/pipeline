@@ -21,6 +21,15 @@ This tutorial will leverage [Cloud Container Builder](https://cloud.google.com/c
 
 ## Tutorial
 
+### Client Tools
+
+The following client tools are required to complete this tutorial:
+
+ * [hub](https://github.com/github/hub) 2.3.0+
+ * [git](https://git-scm.com/downloads) 2.14.0+
+ * [gcloud](https://cloud.google.com/sdk) 179.0.0+
+ * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
+
 ### Create three Kubernetes Clusters
 
 In this section you will create three Kubernetes clusters using Google Container Engine. Each cluster will represent one of the following environments:
@@ -29,7 +38,7 @@ In this section you will create three Kubernetes clusters using Google Container
  * qa
  * production
 
-Create three GKE clusters:
+Create three Kubernetes clusters:
 
 ```
 gcloud container clusters create staging
