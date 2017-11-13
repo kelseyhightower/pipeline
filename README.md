@@ -19,7 +19,15 @@ This tutorial will leverage [Cloud Container Builder](https://cloud.google.com/c
  * successful deployments to QA will trigger a pull request the [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production) repo.
  * changed pushed to the master branch on the `pipeline-infrastructure-production` repo will trigger a rolling deployment to a Kubernetes production cluster
 
-## Usage
+## Tutorial
+
+### Create three Kubernetes Clusters
+
+In this section you will create three Kubernetes clusters using Google Container Engine. Each cluster will represent one of the following environments:
+
+ * staging
+ * qa
+ * production
 
 Create three GKE clusters:
 
