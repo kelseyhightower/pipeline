@@ -100,6 +100,13 @@ HUB_CONFIG="~/.config/hub-pipeline"
 
 #### Fork the pipeline repos
 
+In this section you will fork the following GitHub repos:
+
+* [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
+* [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
+* [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
+* [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
+
 Clone and fork the `kelseyhightower/pipeline-application` repo:
 
 ```
