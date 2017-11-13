@@ -98,7 +98,9 @@ Set the `HUB_CONFIG` env var to point to the pipeline hub configuration file:
 HUB_CONFIG="~/.config/hub-pipeline"
 ```
 
-Fork the pipeline repos:
+#### Fork the pipeline repos
+
+Clone and fork the `kelseyhightower/pipeline-application` repo:
 
 ```
 hub clone https://github.com/kelseyhightower/pipeline-application.git
@@ -107,6 +109,8 @@ hub fork
 cd -
 ```
 
+Clone and fork the `kelseyhightower/pipeline-infrastructure-staging` repo:
+
 ```
 hub clone https://github.com/kelseyhightower/pipeline-infrastructure-staging.git
 cd pipeline-infrastructure-staging/
@@ -114,12 +118,16 @@ hub fork
 cd -
 ```
 
+Clone and fork the `kelseyhightower/pipeline-infrastructure-qa` repo:
+
 ```
 hub clone https://github.com/kelseyhightower/pipeline-infrastructure-qa.git
 cd pipeline-infrastructure-qa/
 hub fork
 cd -
 ```
+
+Clone and fork the `kelseyhightower/pipeline-infrastructure-production` repo:
 
 ```
 hub clone https://github.com/kelseyhightower/pipeline-infrastructure-production.git
