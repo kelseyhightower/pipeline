@@ -63,13 +63,15 @@ gcloud container clusters create production
 
 In this section you will fork the pipeline repositories using your GitHub account.
 
-Create a GitHub token: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line
+Create a GitHub token using the official [guide](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line)
+
+Save the token in the `GITHUB_TOKEN` env var:
 
 ```
 GITHUB_TOKEN="<token>"
 ```
 
-Capture your GitHub username:
+Save your GitHub username in the `GITHUB_USERNAME` env var:
 
 ```
 GITHUB_USERNAME="<github-username>"
