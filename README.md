@@ -32,6 +32,53 @@ The following services are required to complete this tutorial:
 * [GitHub](https://github.com)
 * [Google Cloud Platform](https://console.cloud.google.com/freetrial)
 
+## Enable Google Cloud Platform APIs
+
+In this section you will enable the GCP APIs required to complete this tutorial.
+
+```
+gcloud services enable \
+  container.googleapis.com \
+  cloudapis.googleapis.com \
+  cloudbuild.googleapis.com \
+  sourcerepo.googleapis.com \
+  compute.googleapis.com \
+  storage-component.googleapis.com \
+  containerregistry.googleapis.com \
+  cloudkms.googleapis.com \
+  logging.googleapis.com \
+  --async
+```
+
+```
+gcloud services list --enabled
+```
+```
+NAME                               TITLE
+bigquery-json.googleapis.com       BigQuery API
+clouddebugger.googleapis.com       Stackdriver Debugger API
+datastore.googleapis.com           Google Cloud Datastore API
+storage-component.googleapis.com   Google Cloud Storage
+pubsub.googleapis.com              Google Cloud Pub/Sub API
+container.googleapis.com           Google Container Engine API
+storage-api.googleapis.com         Google Cloud Storage JSON API
+logging.googleapis.com             Stackdriver Logging API
+resourceviews.googleapis.com       Google Compute Engine Instance Groups API
+replicapool.googleapis.com         Google Compute Engine Instance Group Manager API
+cloudapis.googleapis.com           Google Cloud APIs
+sourcerepo.googleapis.com          Cloud Source Repositories API
+deploymentmanager.googleapis.com   Google Cloud Deployment Manager V2 API
+containerregistry.googleapis.com   Google Container Registry API
+monitoring.googleapis.com          Stackdriver Monitoring API
+compute.googleapis.com             Google Compute Engine API
+sql-component.googleapis.com       Google Cloud SQL
+cloudkms.googleapis.com            Google Cloud Key Management Service (KMS) API
+cloudtrace.googleapis.com          Stackdriver Trace API
+servicemanagement.googleapis.com   Google Service Management API
+replicapoolupdater.googleapis.com  Google Compute Engine Instance Group Updater API
+cloudbuild.googleapis.com          Google Cloud Container Builder API
+```
+
 ### Client Tools
 
 The following client tools are required to complete this tutorial:
