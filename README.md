@@ -65,6 +65,10 @@ In this section you will fork the pipeline repositories using your GitHub accoun
 
 Create a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens)
 
+![Image of GitHub UI](images/create-github-token.png)
+
+> Set the token description to "pipeline" and check the repo scope  
+
 Save the token in the `GITHUB_TOKEN` env var:
 
 ```
