@@ -84,7 +84,7 @@ export GITHUB_USERNAME="<github-username>"
 Create a hub configuration file:
 
 ```
-cat <<EOF > ~/.config/hub-pipeline
+cat <<EOF > hub-pipeline
 github.com:
   - protocol: https
     user: ${GITHUB_USERNAME}
@@ -95,7 +95,7 @@ EOF
 Set the `HUB_CONFIG` env var to point to the pipeline hub configuration file:
 
 ```
-HUB_CONFIG="~/.config/hub-pipeline"
+HUB_CONFIG="hub-pipeline"
 ```
 
 #### Fork the pipeline repos
@@ -151,13 +151,15 @@ In this section you will encrypt the hub credentials using the [Google Key Manag
 
 #### Create a KMS Keyring
 
-Before you can encrypt the hub credentials you need to create a KMS keyring.
+Before you can encrypt the hub credentials you need to create a KMS keyring and encryption key.
 
-Create the pipeline keyring:
+Create the `pipeline` KMS keyring:
 
 ```
 gcloud kms keyrings create pipeline --location=global
 ```
+
+Create the `github` KMS key that will be used to encrypt the hub credentials file:
 
 ```
 gcloud kms keys create github \
@@ -166,29 +168,40 @@ gcloud kms keys create github \
   --purpose=encryption
 ```
 
+Encrypt the hub credentials file using the `github` KMS key:
+
 ```
 gcloud kms encrypt \
-  --plaintext-file hub \
+  --plaintext-file "${HUB_CONFIG}" \
   --ciphertext-file hub.enc \
   --location=global \
   --keyring=pipeline \
   --key=github
 ```
 
-Make a GCS bucket
+#### Copy the encrypted hub credentials file to GCS
+
+In this section you will create a GCS bucket and copy the encrypted hub credentials file to it.
+
+Store the GCP project ID in the `PROJECT_ID` env var:
 
 ```
 PROJECT_ID=$(gcloud config get-value core/project)
 ```
 
+Create the pipeline configs GCS bucket:
+
 ```
 gsutil mb gs://${PROJECT_ID}-pipeline-configs
 ```
+
+Copy the encrypted hub credentials file to the pipeline configs bucket:
 
 ```
 gsutil cp hub.enc gs://${PROJECT_ID}-pipeline-configs/
 ```
 
+### Create the Cloud Container Builder Build Triggers
 
 ```
 [^(?!.*master)].*
