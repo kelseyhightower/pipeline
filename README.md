@@ -268,6 +268,14 @@ gcloud kms keys add-iam-policy-binding github \
   --role=roles/cloudkms.cryptoKeyEncrypterDecrypter
 ```
 
+Grant the Container Builder service account access to Google Container Engine:
+
+```
+gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
+  --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+  --role=roles/container.developer
+```
+
 ### Create the Cloud Container Builder Build Triggers
 
 ```
