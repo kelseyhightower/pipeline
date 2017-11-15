@@ -278,6 +278,24 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
 
 ### Create the Cloud Container Builder Build Triggers
 
+First we need to sync the GitHub repos with Google Source Repositories so we can create build triggers.
+
+```
+gcloud source repos create pipeline-application
+```
+
+```
+gcloud source repos create pipeline-infrastructure-staging
+```
+
+```
+gcloud source repos create pipeline-infrastructure-qa
+```
+
+```
+gcloud source repos create pipeline-infrastructure-production
+```
+
 ```
 [^(?!.*master)].*
 ```
