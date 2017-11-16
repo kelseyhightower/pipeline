@@ -194,6 +194,16 @@ hub fork
 cd -
 ```
 
+Clean up the repos:
+
+```
+rm -rf \
+  pipeline-application \
+  pipeline-infrastructure-production \
+  pipeline-infrastructure-qa \
+  pipeline-infrastructure-staging
+```
+
 At this point the pipeline repos have been forked to your GitHub account and can used as part of your own deployment pipeline.
 
 ### Save the Hub Credentials to Google Cloud Storage
@@ -246,6 +256,10 @@ Create the pipeline configs GCS bucket:
 gsutil mb gs://${PROJECT_ID}-pipeline-configs
 ```
 
+```
+gsutil mb gs://${PROJECT_ID}-pipeline-functions
+```
+
 Copy the encrypted hub credentials file to the pipeline configs bucket:
 
 ```
@@ -281,21 +295,89 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
 First we need to sync the GitHub repos with Google Source Repositories so we can create build triggers.
 
 ```
-gcloud source repos create pipeline-application
+REPOS=(
+  pipeline-application
+  pipeline-infrastructure-staging
+  pipeline-infrastructure-qa
+  pipeline-infrastructure-production
+)
 ```
 
 ```
-gcloud source repos create pipeline-infrastructure-staging
+for r in ${REPOS[@]}; do
+  gcloud source repos create ${r}
+  git clone --mirror https://github.com/${GITHUB_USERNAME}/${r}
+  git --git-dir ${r}.git push --mirror \
+    --repo "https://source.developers.google.com/p/${PROJECT_ID}/r/${r}"
+done
+```
+
+#### Create the Build Triggers
+
+```
+export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 ```
 
 ```
-gcloud source repos create pipeline-infrastructure-qa
+cat <<EOF > pipeline-application-staging-build-trigger.json
+{
+  "triggerTemplate": {
+    "projectId": "${PROJECT_ID}",
+    "repoName": "pipeline-application",
+    "branchName": "[^(?!.*master)].*"
+  },
+  "description": "pipeline-staging-build",
+  "substitutions": {
+    "_GITHUB_USERNAME": "${GITHUB_USERNAME}",
+    "_KMS_KEY": "github",
+    "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}",
+    "_CLOUDSDK_CONTAINER_CLUSTER": "staging",
+    "_KMS_KEYRING": "pipeline"
+  },
+  "filename": "staging/cloudbuild.yaml"
+}
+EOF
 ```
 
 ```
-gcloud source repos create pipeline-infrastructure-production
+curl -X POST \
+  https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+  --data-binary @pipeline-application-staging-build-trigger.json
 ```
 
 ```
-[^(?!.*master)].*
+cat <<EOF > pipeline-infrastructure-staging-deployment-trigger.json
+{
+  "triggerTemplate": {
+    "projectId": "${PROJECT_ID}",
+    "repoName": "pipeline-infrastructure-staging",
+    "branchName": "master"
+  },
+  "description": "pipeline-infrastructure-staging-deployment",
+  "substitutions": {
+    "_CLOUDSDK_CONTAINER_CLUSTER": "staging",
+    "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}"
+  },
+  "filename": "cloudbuild.yaml"
+}
+EOF
+```
+
+```
+curl -X POST \
+  https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+  --data-binary @pipeline-infrastructure-staging-deployment-trigger.json
+```
+
+Next create the reposync webhook cloud function:
+
+```
+gcloud beta functions deploy reposync \
+  --entry-point F \
+  --stage-bucket ${PROJECT_ID}-pipeline-functions \
+  --trigger-http
 ```
