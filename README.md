@@ -319,7 +319,7 @@ export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 ```
 
 ```
-cat <<EOF > pipeline-application-staging-build-trigger.json
+cat <<EOF > pipeline-staging-build-trigger.json
 {
   "triggerTemplate": {
     "projectId": "${PROJECT_ID}",
@@ -340,22 +340,35 @@ EOF
 ```
 
 ```
-curl -X POST \
-  https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
-  --data-binary @pipeline-application-staging-build-trigger.json
+cat <<EOF > pipeline-qa-build-trigger.json
+{
+  "triggerTemplate": {
+    "projectId": "${PROJECT_ID}",
+    "repoName": "pipeline-application",
+    "tagName": ".*"
+  },
+  "description": "pipeline-qa-build",
+  "substitutions": {
+    "_KMS_KEYRING": "pipeline",
+    "_GITHUB_USERNAME": "${GITHUB_USERNAME}",
+    "_KMS_KEY": "github",
+    "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}",
+    "_CLOUDSDK_CONTAINER_CLUSTER": "qa"
+  },
+  "filename": "qa/cloudbuild.yaml"
+}
+EOF
 ```
 
 ```
-cat <<EOF > pipeline-infrastructure-staging-deployment-trigger.json
+cat <<EOF > pipeline-staging-deployment-trigger.json
 {
   "triggerTemplate": {
     "projectId": "${PROJECT_ID}",
     "repoName": "pipeline-infrastructure-staging",
     "branchName": "master"
   },
-  "description": "pipeline-infrastructure-staging-deployment",
+  "description": "pipeline-staging-deployment",
   "substitutions": {
     "_CLOUDSDK_CONTAINER_CLUSTER": "staging",
     "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}"
@@ -366,11 +379,62 @@ EOF
 ```
 
 ```
-curl -X POST \
-  https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
-  --data-binary @pipeline-infrastructure-staging-deployment-trigger.json
+
+cat <<EOF > pipeline-qa-deployment-trigger.json
+{
+  "triggerTemplate": {
+    "projectId": "${PROJECT_ID}",
+    "repoName": "pipeline-infrastructure-qa",
+    "branchName": "master"
+  },
+  "description": "pipeline-qa-deployment",
+  "substitutions": {
+    "_KMS_KEYRING": "pipeline",
+    "_GITHUB_USERNAME": "${GITHUB_USERNAME}",
+    "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}",
+    "_CLOUDSDK_CONTAINER_CLUSTER": "qa",
+    "_KMS_KEY": "github"
+  },
+  "filename": "cloudbuild.yaml"
+}
+EOF
+```
+
+```
+cat <<EOF > pipeline-production-deployment-trigger.json
+{
+  "triggerTemplate": {
+    "projectId": "${PROJECT_ID}",
+    "repoName": "pipeline-infrastructure-production",
+    "branchName": "master"
+  },
+  "description": "pipeline-production-deployment",
+  "substitutions": {
+    "_CLOUDSDK_COMPUTE_ZONE": "${COMPUTE_ZONE}",
+    "_CLOUDSDK_CONTAINER_CLUSTER": "production"
+  },
+  "filename": "cloudbuild.yaml"
+}
+```
+
+```
+BUILD_TRIGGER_CONFIGS=(
+  pipeline-staging-build-trigger.json
+  pipeline-qa-build-trigger.json
+  pipeline-staging-deployment-trigger.json
+  pipeline-qa-deployment-trigger.json
+  pipeline-production-deployment-trigger.json
+)
+```
+
+```
+for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
+  curl -X POST \
+    https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+    --data-binary @${config}
+done
 ```
 
 Next create the reposync webhook cloud function:
