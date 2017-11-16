@@ -415,6 +415,7 @@ cat <<EOF > pipeline-production-deployment-trigger.json
   },
   "filename": "cloudbuild.yaml"
 }
+EOF
 ```
 
 ```
