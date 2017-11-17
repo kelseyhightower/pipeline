@@ -186,7 +186,7 @@ Clone and fork the pipeline repos:
 ```
 for repo in ${REPOS[@]}; do
   hub clone "https://github.com/kelseyhightower/${repo}.git"
-  cd pipeline-application/
+  cd ${repo}/
   hub fork
   cd -
 done
