@@ -323,6 +323,41 @@ gcloud beta functions deploy reposync \
   --trigger-http
 ```
 
+Store the `reposync` webhook URL:
+
+```
+WEBHOOK_URL=$(gcloud beta functions describe reposync \
+  --format='value(httpsTrigger.url)')
+```
+
+### Create the GitHub Webhooks
+
+```
+cat <<EOF > github-webhook-config.json
+{
+  "name": "web",
+  "active": true,
+  "events": [
+    "push"
+  ],
+  "secret": "pipeline",
+  "config": {
+    "url": "${WEBHOOK_URL}",
+    "content_type": "json"
+  }
+}
+EOF
+```
+
+```
+for repo in ${REPOS[@]}; do
+  curl -X POST "https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/hooks" \
+    -H "Accept: application/vnd.github.v3+json" \
+    -u "${GITHUB_USERNAME}:${GITHUB_TOKEN}" \
+    --data-binary @github-webhook-config.json
+done
+```
+
 ### Create the Cloud Builder Triggers
 
 ```
