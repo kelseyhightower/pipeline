@@ -312,11 +312,13 @@ for r in ${REPOS[@]}; do
 done
 ```
 
-#### Create the Build Triggers
+### Create the Build Triggers
 
 ```
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 ```
+
+Create a build trigger that rebuilds the pipeline application container image and updates the Kubernetes deployment configuration files for the staging cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-application` GitHub repository on any branch except the master.
 
 ```
 cat <<EOF > pipeline-staging-build-trigger.json
@@ -339,6 +341,8 @@ cat <<EOF > pipeline-staging-build-trigger.json
 EOF
 ```
 
+Create a build trigger that rebuilds the pipeline application container image and updates the Kubernetes deployment configuration files for the qa cluster. This trigger will fire when a new tag is pushed to the `${GITHUB_USERNAME}/pipeline-application` GitHub repository.
+
 ```
 cat <<EOF > pipeline-qa-build-trigger.json
 {
@@ -360,6 +364,8 @@ cat <<EOF > pipeline-qa-build-trigger.json
 EOF
 ```
 
+Create a build trigger that applies the Kubernetes deployment configuration files for the staging cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-staging` GitHub repository on the master branch.
+
 ```
 cat <<EOF > pipeline-staging-deployment-trigger.json
 {
@@ -378,8 +384,9 @@ cat <<EOF > pipeline-staging-deployment-trigger.json
 EOF
 ```
 
-```
+Create a build trigger that applies the Kubernetes deployment configuration files for the qa cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-qa` GitHub repository on the master branch.
 
+```
 cat <<EOF > pipeline-qa-deployment-trigger.json
 {
   "triggerTemplate": {
@@ -400,6 +407,8 @@ cat <<EOF > pipeline-qa-deployment-trigger.json
 EOF
 ```
 
+Create a build trigger that applies the Kubernetes deployment configuration files for the production cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-production` GitHub repository on the master branch.
+
 ```
 cat <<EOF > pipeline-production-deployment-trigger.json
 {
@@ -417,6 +426,8 @@ cat <<EOF > pipeline-production-deployment-trigger.json
 }
 EOF
 ```
+
+Create a cloud build trigger for each build trigger configuration file:
 
 ```
 BUILD_TRIGGER_CONFIGS=(
