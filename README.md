@@ -510,3 +510,40 @@ for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
     --data-binary @${config}
 done
 ```
+
+### Test the Pipeline
+
+Ensure you have the cluster credentials for each Kubernetes cluster:
+
+```
+gcloud container clusters get-credentials staging
+```
+
+```
+gcloud container clusters get-credentials qa
+```
+
+```
+gcloud container clusters get-credentials production
+```
+
+Ensure no pods are currently running in the default namespace in the staging cluster:
+
+```
+kubectl get pods \
+  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_staging
+```
+
+Ensure no pods are currently running in the default namespace in the qa cluster:
+
+```
+kubectl get pods \
+  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_qa
+```
+
+Ensure no pods are currently running in the default namespace in the production cluster:
+
+```
+kubectl get pods \
+  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_production
+```
