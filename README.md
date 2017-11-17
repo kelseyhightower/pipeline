@@ -547,3 +547,115 @@ Ensure no pods are currently running in the default namespace in the production 
 kubectl get pods \
   --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_production
 ```
+
+#### Update the pipeline-application
+
+In this section you will update the pipeline application and push the changes to a new branch on your pipeline-application GitHub repository.
+
+```
+git config --global hub.protocol https
+```
+
+```
+git config --global credential.https://github.com.helper /usr/local/bin/hub-credential-helper
+```
+
+
+Clone the `pipeline-application` GitHub repository:
+
+```
+hub clone ${GITHUB_USERNAME}/pipeline-application
+```
+
+```
+cd pipeline-application
+```
+
+```
+git checkout -b new-message
+```
+
+Change the message:
+
+```
+sed "s/world/${GITHUB_USERNAME}/g" main.go > main.go.new
+```
+
+```
+mv main.go.new main.go
+```
+
+Review the changes:
+
+```
+git diff
+```
+```
+diff --git a/main.go b/main.go
+index 2f76589..0b08a59 100644
+--- a/main.go
++++ b/main.go
+@@ -21,7 +21,7 @@ func main() {
+        log.Println("Starting pipeline application...")
+
+        http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+-               fmt.Fprintf(w, "Hello world!\n")
++               fmt.Fprintf(w, "Hello hightowerlabs!\n")
+        })
+
+        http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+```
+
+Commit the changes to the `pipeline-application` GitHub repository:
+
+```
+git add .
+```
+
+```
+git commit -m "change message"
+```
+
+```
+git push origin new-message
+```
+
+Review the current builds:
+
+```
+gcloud container builds list
+ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                      STATUS
+f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipeline-infrastructure-staging@master  -                                                                           SUCCESS
+76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
+```
+
+List the container images:
+
+```
+gcloud container images list --repository gcr.io/${PROJECT_ID}
+```
+```
+NAME
+gcr.io/${PROJECT_ID}/pipeline
+```
+
+List the container image tags:
+
+```
+gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
+```
+```
+DIGEST        TAGS                                      TIMESTAMP
+07086bf1e94d  6e2865a45c29974b0b9099fa824fc00d0128de18  2017-11-16T21:37:59
+```
+
+List the pods in the staging cluster:
+
+```
+kubectl get pods \
+  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_staging
+```
+```
+NAME                        READY     STATUS    RESTARTS   AGE
+pipeline-2401200729-tg2hf   1/1       Running   0          3s
+```
