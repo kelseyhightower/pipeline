@@ -32,12 +32,12 @@ The following services are required to complete this tutorial:
 * [GitHub](https://github.com)
 * [Google Cloud Platform](https://console.cloud.google.com/freetrial)
 
-## Enable Google Cloud Platform APIs
+### Enable Google Cloud Platform APIs
 
 In this section you will enable the GCP APIs required to complete this tutorial.
 
 ```
-gcloud services enable \
+gcloud services enable --async \
   container.googleapis.com \
   cloudapis.googleapis.com \
   cloudbuild.googleapis.com \
@@ -47,7 +47,7 @@ gcloud services enable \
   containerregistry.googleapis.com \
   cloudkms.googleapis.com \
   logging.googleapis.com \
-  --async
+  cloudfunctions.googleapis.com
 ```
 
 ```
@@ -58,6 +58,7 @@ NAME                               TITLE
 bigquery-json.googleapis.com       BigQuery API
 clouddebugger.googleapis.com       Stackdriver Debugger API
 datastore.googleapis.com           Google Cloud Datastore API
+source.googleapis.com              Legacy Cloud Source Repositories API
 storage-component.googleapis.com   Google Cloud Storage
 pubsub.googleapis.com              Google Cloud Pub/Sub API
 container.googleapis.com           Google Container Engine API
@@ -77,6 +78,7 @@ cloudtrace.googleapis.com          Stackdriver Trace API
 servicemanagement.googleapis.com   Google Service Management API
 replicapoolupdater.googleapis.com  Google Compute Engine Instance Group Updater API
 cloudbuild.googleapis.com          Google Cloud Container Builder API
+cloudfunctions.googleapis.com      Google Cloud Functions API
 ```
 
 ### Client Tools
@@ -88,7 +90,7 @@ The following client tools are required to complete this tutorial:
  * [gcloud](https://cloud.google.com/sdk) 179.0.0+
  * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
 
-### Create three Kubernetes Clusters
+### Create Kubernetes Clusters
 
 In this section you will create three Kubernetes clusters using Google Container Engine. Each cluster will represent one of the following environments:
 
@@ -110,7 +112,7 @@ gcloud container clusters create qa
 gcloud container clusters create production
 ```
 
-### Fork the pipeline repositories
+### Create a GitHub API Token
 
 In this section you will fork the pipeline repositories using your GitHub account.
 
@@ -149,7 +151,7 @@ Set the `HUB_CONFIG` env var to point to the pipeline hub configuration file:
 HUB_CONFIG="hub-pipeline"
 ```
 
-#### Fork the pipeline repos
+### Setup the pipeline repositories
 
 In this section you will fork the following GitHub repos:
 
@@ -158,40 +160,24 @@ In this section you will fork the following GitHub repos:
 * [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
 * [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
-Clone and fork the `kelseyhightower/pipeline-application` repo:
-
 ```
-hub clone https://github.com/kelseyhightower/pipeline-application.git
-cd pipeline-application/
-hub fork
-cd -
-```
-
-Clone and fork the `kelseyhightower/pipeline-infrastructure-staging` repo:
-
-```
-hub clone https://github.com/kelseyhightower/pipeline-infrastructure-staging.git
-cd pipeline-infrastructure-staging/
-hub fork
-cd -
+REPOS=(
+  pipeline-application
+  pipeline-infrastructure-staging
+  pipeline-infrastructure-qa
+  pipeline-infrastructure-production
+)
 ```
 
-Clone and fork the `kelseyhightower/pipeline-infrastructure-qa` repo:
+Clone and fork the pipeline repos:
 
 ```
-hub clone https://github.com/kelseyhightower/pipeline-infrastructure-qa.git
-cd pipeline-infrastructure-qa/
-hub fork
-cd -
-```
-
-Clone and fork the `kelseyhightower/pipeline-infrastructure-production` repo:
-
-```
-hub clone https://github.com/kelseyhightower/pipeline-infrastructure-production.git
-cd pipeline-infrastructure-production/
-hub fork
-cd -
+for repo in ${REPOS[@]}; do
+  hub clone "https://github.com/kelseyhightower/${repo}.git"
+  cd pipeline-application/
+  hub fork
+  cd -
+done
 ```
 
 Clean up the repos:
