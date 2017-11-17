@@ -86,19 +86,20 @@ cloudfunctions.googleapis.com      Google Cloud Functions API
 The following client tools are required to complete this tutorial:
 
  * [hub](https://github.com/github/hub) 2.3.0+
+ * [hub-credential-helper](https://github.com/kelseyhightower/hub-credential-helper) 0.0.1+
  * [git](https://git-scm.com/downloads) 2.14.0+
  * [gcloud](https://cloud.google.com/sdk) 179.0.0+
  * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
 
 ### Create Kubernetes Clusters
 
-In this section you will create three Kubernetes clusters using Google Container Engine. Each cluster will represent one of the following environments:
+In this section you will create three Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine). Each cluster will represent one of the following environments:
 
  * staging
  * qa
  * production
 
-Create three Kubernetes clusters:
+Create the `staging`, `qa`, and `production` Kubernetes clusters:
 
 ```
 gcloud container clusters create staging --num-nodes 1
@@ -124,29 +125,31 @@ qa          us-west1-c  1.7.8-gke.0     XX.XXX.XX.XX   n1-standard-1  1.7.8-gke.
 staging     us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
 ```
 
-### Create a GitHub API Token
+### Generate a GitHub API Token
 
-In this section you will fork the pipeline repositories using your GitHub account.
+In this section you will generate a [GitHub API token](https://github.com/blog/1509-personal-api-tokens) which will be used to automate tasks involving the [GitHub API](https://developer.github.com/v3/).
 
-Create a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens)
+Generate a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens)
 
 ![Image of GitHub UI](images/create-github-token.png)
 
-> Set the token description to "pipeline" and check the repo scope  
+> Set the token description to "pipeline" and check the repo and admin:repo_hook scopes.  
 
-Save the token in the `GITHUB_TOKEN` env var:
+Save the token in the `GITHUB_TOKEN` environment variable:
 
 ```
 export GITHUB_TOKEN="<token>"
 ```
 
-Save your GitHub username in the `GITHUB_USERNAME` env var:
+Your GitHub username will be used to automate GitHub related tasks including forking the GitHub repositories necessary to complete this tutorial and creating [GitHub webhooks](https://developer.github.com/webhooks/). Save your GitHub username in the `GITHUB_USERNAME` env var:
 
 ```
 export GITHUB_USERNAME="<github-username>"
 ```
 
-Create a hub configuration file:
+#### Create the hub configuration file
+
+The hub commandline utility will be used to automate GitHub related tasks during the build pipeline creation process and whenever an automated build step needs to interact with GitHub. Create a hub configuration file:
 
 ```
 cat <<EOF > hub-pipeline
@@ -157,52 +160,11 @@ github.com:
 EOF
 ```
 
-Set the `HUB_CONFIG` env var to point to the pipeline hub configuration file:
+Set the `HUB_CONFIG` environment variable to point to the hub configuration file:
 
 ```
-HUB_CONFIG="hub-pipeline"
+HUB_CONFIG="${PWD}/hub-pipeline"
 ```
-
-### Setup the pipeline repositories
-
-In this section you will fork the following GitHub repos:
-
-* [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
-* [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
-* [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
-* [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
-
-```
-REPOS=(
-  pipeline-application
-  pipeline-infrastructure-staging
-  pipeline-infrastructure-qa
-  pipeline-infrastructure-production
-)
-```
-
-Clone and fork the pipeline repos:
-
-```
-for repo in ${REPOS[@]}; do
-  hub clone "https://github.com/kelseyhightower/${repo}.git"
-  cd ${repo}/
-  hub fork
-  cd -
-done
-```
-
-Clean up the repos:
-
-```
-rm -rf \
-  pipeline-application \
-  pipeline-infrastructure-production \
-  pipeline-infrastructure-qa \
-  pipeline-infrastructure-staging
-```
-
-At this point the pipeline repos have been forked to your GitHub account and can used as part of your own deployment pipeline.
 
 ### Save the Hub Credentials to Google Cloud Storage
 
@@ -284,9 +246,16 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
   --role=roles/container.developer
 ```
 
-### Mirror GitHub Repositories to Cloud Source Repositories
+### Setup the pipeline repositories
 
-Currently Container Builder only supports build triggers on Cloud Source Repositories. In this section you will create Cloud Source Repositories that will mirror each of the GitHub pipeline repositories.
+In this section you will fork the following GitHub repos to your own GitHub account:
+
+* [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
+* [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
+* [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
+* [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
+
+Clone then fork the pipeline application and infrastructure repos:
 
 ```
 REPOS=(
@@ -297,7 +266,33 @@ REPOS=(
 )
 ```
 
-For each GitHub repositories create a Cloud Source Repository to mirror it:
+```
+for repo in ${REPOS[@]}; do
+  hub clone "https://github.com/kelseyhightower/${repo}.git"
+  cd ${repo}/
+  hub fork
+  cd -
+  rm -rf ${repo}
+done
+```
+
+At this point the pipeline application and infrastructure repos have been forked to your GitHub account and can used as part of your own deployment pipeline.
+
+
+### Mirror GitHub Repositories to Cloud Source Repositories
+
+Currently Container Builder only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create Cloud Source Repositories that will mirror each of the GitHub pipeline repositories.
+
+```
+REPOS=(
+  pipeline-application
+  pipeline-infrastructure-staging
+  pipeline-infrastructure-qa
+  pipeline-infrastructure-production
+)
+```
+
+For each GitHub repository create a Cloud Source Repository to mirror it:
 
 ```
 for r in ${REPOS[@]}; do
@@ -308,9 +303,13 @@ for r in ${REPOS[@]}; do
 done
 ```
 
-At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep them in sync deploy the `reposync` Cloud Function to your project:
+At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep them in sync deploy the `reposync` Cloud Function to your project.
 
 #### Deploy the reposync Cloud Function
+
+In this section you will use [Google Cloud Functions](https://cloud.google.com/functions/) to host the [reposync](https://github.com/kelseyhightower/reposync) GitHub webhook to keep the Cloud Source Repositories in sync.
+
+Download the `reposync` cloud function:
 
 ```
 wget https://github.com/kelseyhightower/reposync/releases/download/0.0.1/reposync-cloud-function-0.0.1.zip
@@ -324,9 +323,13 @@ unzip reposync-cloud-function-0.0.1.zip
 cd reposync-cloud-function-0.0.1
 ```
 
+Create a [Google Cloud Storage](https://cloud.google.com/storage) bucket to host the `reposync` cloud function source.
+
 ```
 gsutil mb gs://${PROJECT_ID}-pipeline-functions
 ```
+
+Deploy the `reposync` cloud function:
 
 ```
 gcloud beta functions deploy reposync \
@@ -341,12 +344,16 @@ cd -
 
 ### Create the GitHub Webhooks
 
-Store the `reposync` webhook URL:
+In this section you will configure each pipeline GitHub repository to send [push events](https://developer.github.com/webhooks/#events) to the `reposync` cloud function.
+
+Retrieve the `reposync` webhook URL:
 
 ```
 WEBHOOK_URL=$(gcloud beta functions describe reposync \
   --format='value(httpsTrigger.url)')
 ```
+
+Create a GitHub webhook configuration object:
 
 ```
 cat <<EOF > github-webhook-config.json
@@ -366,6 +373,8 @@ cat <<EOF > github-webhook-config.json
 EOF
 ```
 
+Create a wehbook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration file:
+
 ```
 for repo in ${REPOS[@]}; do
   curl -X POST "https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/hooks" \
@@ -375,7 +384,11 @@ for repo in ${REPOS[@]}; do
 done
 ```
 
-### Create the Cloud Builder Triggers
+### Create the Cloud Container Builder Build Triggers
+
+In this section you will create the Cloud Container Builder build triggers necessary to establish the end-to-end build pipeline described at the start of this tutorial.
+
+Retrieve the default compute zone:
 
 ```
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
