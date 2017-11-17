@@ -112,6 +112,18 @@ gcloud container clusters create qa --num-nodes 1
 gcloud container clusters create production --num-nodes 1
 ```
 
+At this point you should have three Kubernetes clusters running:
+
+```
+gcloud container clusters list
+```
+```
+NAME        ZONE        MASTER_VERSION  MASTER_IP      MACHINE_TYPE   NODE_VERSION  NUM_NODES  STATUS
+production  us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
+qa          us-west1-c  1.7.8-gke.0     XX.XXX.XX.XX   n1-standard-1  1.7.8-gke.0   1          RUNNING
+staging     us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
+```
+
 ### Create a GitHub API Token
 
 In this section you will fork the pipeline repositories using your GitHub account.
