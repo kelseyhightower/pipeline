@@ -101,15 +101,15 @@ In this section you will create three Kubernetes clusters using Google Container
 Create three Kubernetes clusters:
 
 ```
-gcloud container clusters create staging
+gcloud container clusters create staging --num-nodes 1
 ```
 
 ```
-gcloud container clusters create qa
+gcloud container clusters create qa --num-nodes 1
 ```
 
 ```
-gcloud container clusters create production
+gcloud container clusters create production --num-nodes 1
 ```
 
 ### Create a GitHub API Token
