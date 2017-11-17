@@ -254,10 +254,6 @@ Create the pipeline configs GCS bucket:
 gsutil mb gs://${PROJECT_ID}-pipeline-configs
 ```
 
-```
-gsutil mb gs://${PROJECT_ID}-pipeline-functions
-```
-
 Copy the encrypted hub credentials file to the pipeline configs bucket:
 
 ```
@@ -326,6 +322,10 @@ unzip reposync-cloud-function-0.0.1.zip
 
 ```
 cd reposync-cloud-function-0.0.1
+```
+
+```
+gsutil mb gs://${PROJECT_ID}-pipeline-functions
 ```
 
 ```
