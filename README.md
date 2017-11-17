@@ -335,14 +335,18 @@ gcloud beta functions deploy reposync \
   --trigger-http
 ```
 
+```
+cd -
+```
+
+### Create the GitHub Webhooks
+
 Store the `reposync` webhook URL:
 
 ```
 WEBHOOK_URL=$(gcloud beta functions describe reposync \
   --format='value(httpsTrigger.url)')
 ```
-
-### Create the GitHub Webhooks
 
 ```
 cat <<EOF > github-webhook-config.json
