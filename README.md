@@ -525,6 +525,8 @@ for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
 done
 ```
 
+At this point all the build triggers are in place. It's now time to test the build pipeline.
+
 ### Test the Pipeline
 
 Ensure you have the cluster credentials for each Kubernetes cluster:
