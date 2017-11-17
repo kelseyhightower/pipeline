@@ -737,13 +737,17 @@ One the pipeline application is deployed to the QA cluster a pull request is sen
 
 ![Image of GitHub UI](images/review-production-pull-request.png)
 
+```
 gcloud container builds list
+```
+```
 ID                                    CREATE_TIME                DURATION  SOURCE                                     IMAGES                                                                      STATUS
 3390166b-0b9e-42e2-ae9a-31a1da90ec3a  2017-11-17T06:35:09+00:00  11S       pipeline-infrastructure-production@master  -                                                                           SUCCESS
 1d04e7b4-5252-407d-a1b5-72d3e8ee7512  2017-11-17T06:22:44+00:00  44S       pipeline-infrastructure-qa@master          -                                                                           SUCCESS
 231edd08-805e-41f7-a2a6-1cd2d25d839b  2017-11-17T06:21:37+00:00  1M1S      pipeline-application@1.0.0                 gcr.io/pipeline-tutorial/pipeline:1.0.0                                     SUCCESS
 f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipeline-infrastructure-staging@master     -                                                                           SUCCESS
 76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message           gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
+```
 
 Once merged verify the pipeline application was deployed to production:
 
