@@ -290,9 +290,9 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
   --role=roles/container.developer
 ```
 
-### Create the Cloud Container Builder Build Triggers
+### Mirror GitHub Repositories to Cloud Source Repositories
 
-First we need to sync the GitHub repos with Google Source Repositories so we can create build triggers.
+Currently Container Builder only supports build triggers on Cloud Source Repositories. In this section you will create Cloud Source Repositories that will mirror each of the GitHub pipeline repositories.
 
 ```
 REPOS=(
@@ -303,6 +303,8 @@ REPOS=(
 )
 ```
 
+For each GitHub repositories create a Cloud Source Repository to mirror it:
+
 ```
 for r in ${REPOS[@]}; do
   gcloud source repos create ${r}
@@ -312,7 +314,30 @@ for r in ${REPOS[@]}; do
 done
 ```
 
-### Create the Build Triggers
+At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep them in sync deploy the `reposync` Cloud Function to your project:
+
+#### Deploy the reposync Cloud Function
+
+```
+wget https://github.com/kelseyhightower/reposync/releases/download/0.0.1/reposync-cloud-function-0.0.1.zip
+```
+
+```
+unzip reposync-cloud-function-0.0.1.zip
+```
+
+```
+cd reposync-cloud-function-0.0.1
+```
+
+```
+gcloud beta functions deploy reposync \
+  --entry-point F \
+  --stage-bucket ${PROJECT_ID}-pipeline-functions \
+  --trigger-http
+```
+
+### Create the Cloud Builder Triggers
 
 ```
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
@@ -447,13 +472,4 @@ for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
     -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
     --data-binary @${config}
 done
-```
-
-Next create the reposync webhook cloud function:
-
-```
-gcloud beta functions deploy reposync \
-  --entry-point F \
-  --stage-bucket ${PROJECT_ID}-pipeline-functions \
-  --trigger-http
 ```
