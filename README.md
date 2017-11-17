@@ -356,8 +356,9 @@ cat <<EOF > github-webhook-config.json
   "events": [
     "push"
   ],
-  "secret": "pipeline",
+
   "config": {
+    "secret": "pipeline",
     "url": "${WEBHOOK_URL}",
     "content_type": "json"
   }
