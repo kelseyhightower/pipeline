@@ -7,7 +7,7 @@ In this section you will fork the following GitHub repositories to your own GitH
 * [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
 * [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
-Fork the pipeline application and infrastructure repositories:
+Set the list of repository names:
 
 ```
 REPOS=(
@@ -17,6 +17,8 @@ REPOS=(
   pipeline-infrastructure-production
 )
 ```
+
+Fork the pipeline application and infrastructure repositories:
 
 ```
 for repo in ${REPOS[@]}; do
@@ -34,6 +36,8 @@ At this point the pipeline application and infrastructure repositories have been
 ## Mirror GitHub Repositories to Cloud Source Repositories
 
 Currently Container Builder only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create the Cloud Source Repositories that will mirror each of the GitHub repositories created in the previous section.
+
+Set the list of repository names:
 
 ```
 REPOS=(
