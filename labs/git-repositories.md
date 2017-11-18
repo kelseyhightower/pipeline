@@ -125,6 +125,10 @@ EOF
 Create a wehbook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration payload created in the previous step:
 
 ```
+export GITHUB_TOKEN=$(cat .pipeline-tutorial-github-api-token)
+```
+
+```
 for repo in ${REPOS[@]}; do
   curl -X POST "https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/hooks" \
     -H "Content-Type: application/json" \
