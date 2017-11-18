@@ -9,7 +9,7 @@ cat <<EOF > hub
 github.com:
   - protocol: https
     user: ${GITHUB_USERNAME}
-    oauth_token: ${GITHUB_TOKEN}
+    oauth_token: $(cat .pipeline-tutorial-github-api-token)
 EOF
 ```
 
@@ -19,7 +19,7 @@ Set the `HUB_CONFIG` environment variable to point to the hub configuration file
 HUB_CONFIG="${PWD}/hub"
 ```
 
-## Encrypt the Hub Configuration File and upload to Google Cloud Storage
+## Encrypt the Hub Configuration File and Upload to Google Cloud Storage
 
 In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket, which will make the hub configuration file securely available during any automated build steps performed by Cloud Container Builder in the future.
 
