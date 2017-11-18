@@ -93,11 +93,7 @@ The following client tools are required to complete this tutorial:
 
 ### Create Kubernetes Clusters
 
-In this section you will create three Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine). Each cluster will represent one of the following environments:
-
- * staging
- * qa
- * production
+In this section you will create three Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine). Each cluster will represent one of the following environments: staging, qa, production.
 
 Create the `staging`, `qa`, and `production` Kubernetes clusters:
 
