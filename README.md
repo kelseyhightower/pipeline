@@ -308,9 +308,9 @@ done
 
 At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep the Cloud Source repositories synchronized deploy the [reposync webhook](https://github.com/kelseyhightower/reposync) to your project.
 
-#### Deploy the reposync Cloud Function
+#### Deploy the Repo Sync WebHook
 
-In this section you will use [Google Cloud Functions](https://cloud.google.com/functions/) to host the [reposync](https://github.com/kelseyhightower/reposync) GitHub webhook to keep the Cloud Source Repositories in sync.
+In this section you will use [Google Cloud Functions](https://cloud.google.com/functions/) to host the [reposync](https://github.com/kelseyhightower/reposync) webhook used to keep the Cloud Source Repositories in sync with the corresponding GitHub repositories.
 
 Download the `reposync` cloud function:
 
@@ -322,11 +322,7 @@ wget https://github.com/kelseyhightower/reposync/releases/download/0.0.1/reposyn
 unzip reposync-cloud-function-0.0.1.zip
 ```
 
-```
-cd reposync-cloud-function-0.0.1
-```
-
-Create a [Google Cloud Storage](https://cloud.google.com/storage) bucket to host the `reposync` cloud function source.
+Create a [Google Cloud Storage](https://cloud.google.com/storage) bucket to host the `reposync` cloud function source tree:
 
 ```
 gsutil mb gs://${PROJECT_ID}-pipeline-functions
@@ -336,13 +332,10 @@ Deploy the `reposync` cloud function:
 
 ```
 gcloud beta functions deploy reposync \
+  --source reposync-cloud-function-0.0.1 \
   --entry-point F \
   --stage-bucket ${PROJECT_ID}-pipeline-functions \
   --trigger-http
-```
-
-```
-cd -
 ```
 
 ### Create the GitHub Webhooks
