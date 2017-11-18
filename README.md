@@ -1,6 +1,10 @@
 # pipeline
 
-The pipeline tutorial walks you through creating an end to end deployment pipeline for Kubernetes using [Cloud Container Builder](https://cloud.google.com/container-builder/).
+The pipeline tutorial walks you through creating an end-to-end deployment pipeline using [Cloud Container Builder](https://cloud.google.com/container-builder), [GitHub](https://github.com), and multiple [Kubernetes](https://cloud.google.com/kubernetes-engine) clusters.
+
+This tutorial will demonstrate how to propagate a Kubernetes deployment through multiple environments, each backed by a dedicated Kubernetes cluster, using a collection of Kubernetes manifest files checked into a set git repositories representing each environment.
+
+> The use of multiple Kubernetes clusters and GitHub repositories enables fine grained access control for each environment and streamlines automated build steps targeting those environments.
 
 ## The Application
 
