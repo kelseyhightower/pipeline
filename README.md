@@ -36,13 +36,23 @@ The following services are required to complete this tutorial:
 
 In this section you will create a new GCP project and enable the Google Cloud Platform APIs required to complete this tutorial.
 
-Create a new project named `pipeline-tutorial` and set it as the default project:
+Create a new project named `pipeline-tutorial` and capture the projectId in the `PROJECT_ID` env var:
 
 ```
-gcloud projects create --name "pipeline-tutorial" --set-as-default
+PROJECT_ID=$(gcloud projects create \
+  --name "pipeline-tutorial" \
+  --format='value(projectId)')
 ```
 
 > At the prompt type 'y' to accept generated project id.
+
+Set the default project:
+
+```
+gcloud config set project ${PROJECT_ID}
+```
+
+> Creating new projects with the `--set-as-default` flag does not seem to work as of gcloud version (Google Cloud SDK 180.0.0) and results in the core/project property being set to None. As a workaround the projectId is being extracted from the output of the gcloud command and stored in an env var and set manually.
 
 Enable the required GCP APIs:
 
@@ -60,7 +70,7 @@ gcloud services enable --async \
   cloudfunctions.googleapis.com
 ```
 
-In may take several minutes before the GCP APIs become enabled and ready for use. In the meanwhile it's safe to continue with the tutorial. At any point you can use the `gcloud` command to list enabled services:
+In can take several minutes before the GCP APIs are enabled and ready for use. In the meanwhile it's safe to continue the tutorial. At any point you can use the `gcloud` command to list enabled services:
 
 ```
 gcloud services list --enabled
