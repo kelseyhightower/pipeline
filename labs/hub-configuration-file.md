@@ -19,11 +19,11 @@ Set the `HUB_CONFIG` environment variable to point to the hub configuration file
 HUB_CONFIG="${PWD}/hub"
 ```
 
-### Encrypt the Hub Configuration File and upload to Google Cloud Storage
+## Encrypt the Hub Configuration File and upload to Google Cloud Storage
 
 In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket, which will make the hub configuration file securely available during any automated build steps performed by Cloud Container Builder in the future.
 
-#### Create a KMS Keyring and Encryption Key
+### Create a KMS Keyring and Encryption Key
 
 A KMS keyring and encryption key is required to encrypt the hub configuration file.
 
@@ -53,7 +53,7 @@ gcloud kms encrypt \
   --key=github
 ```
 
-#### Upload the Encrypted Hub Configuration File to GCS
+### Upload the Encrypted Hub Configuration File to GCS
 
 In this section you will create a GCS bucket and upload the encrypted hub configuration file to it.
 
@@ -75,7 +75,7 @@ Upload the encrypted hub configuration file to the pipeline configs GCS bucket:
 gsutil cp hub.enc gs://${PROJECT_ID}-pipeline-configs/
 ```
 
-#### Grant the Container Builder Service Account Access to the GitHub Encryption Key
+### Grant the Container Builder Service Account Access to the GitHub Encryption Key
 
 In this section you will grant access to the `github` encrypt key to the Container Builder service account. Performing these steps will enable Container Builder to decrypt the hub configuration file during any automated build.
 
