@@ -102,15 +102,9 @@ In this section you will create three Kubernetes clusters using [Google Kubernet
 Create the `staging`, `qa`, and `production` Kubernetes clusters:
 
 ```
-gcloud container clusters create staging --num-nodes 1
-```
-
-```
-gcloud container clusters create qa --num-nodes 1
-```
-
-```
-gcloud container clusters create production --num-nodes 1
+for e in staging qa production; do
+  gcloud container clusters create ${e} --async --num-nodes 1
+done
 ```
 
 At this point you should have three Kubernetes clusters running:
