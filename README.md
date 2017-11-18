@@ -546,24 +546,29 @@ for e in staging qa production; do
 done
 ```
 
-#### Update the pipeline-application
+#### Modify the Pipeline Application
 
-In this section you will update the pipeline application and push the changes to a new branch on your pipeline-application GitHub repository.
+In this section you will modify the pipeline application and push the changes to a new branch on your pipeline-application GitHub repository.
+
+Configure git to ensure the hub command line utility uses the HTTPS protocol will working with GitHub repositories:
 
 ```
 git config --global hub.protocol https
 ```
 
+Configure a git credential helper to use the `hub-credential-helper` utility when authenticating to GitHub:
+
 ```
 git config --global credential.https://github.com.helper /usr/local/bin/hub-credential-helper
 ```
 
-
-Clone the `pipeline-application` GitHub repository:
+Clone the `pipeline-application` GitHub repository to the current directory:
 
 ```
 hub clone ${GITHUB_USERNAME}/pipeline-application
 ```
+
+Change into the `pipeline-application` directory and create a new branch named `new-message`:
 
 ```
 cd pipeline-application
@@ -573,7 +578,7 @@ cd pipeline-application
 git checkout -b new-message
 ```
 
-Change the message:
+Modify the message return for HTTP requests to the pipeline application:
 
 ```
 sed "s/world/${GITHUB_USERNAME}/g" main.go > main.go.new
@@ -583,7 +588,9 @@ sed "s/world/${GITHUB_USERNAME}/g" main.go > main.go.new
 mv main.go.new main.go
 ```
 
-Review the changes:
+> The syntax for in-place sed updates does not work consistently across operating systems so we are forced to create a temporary file and use it to overwrite the target of our changes.
+
+Review the changes to the pipeline application:
 
 ```
 git diff
@@ -604,19 +611,13 @@ index 2f76589..0b08a59 100644
         http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 ```
 
-Commit the changes to the `pipeline-application` GitHub repository:
+Commit the changes and push the `new-message` branch to the `pipeline-application` GitHub repository:
 
 ```
-git add .
+git add main.go && git commit -m "change message" && git push origin new-message
 ```
 
-```
-git commit -m "change message"
-```
-
-```
-git push origin new-message
-```
+Pushing a new branch to the `pipeline-application` GitHub repository will trigger the `pipeline-staging-build` build trigger, which will in turn trigger the `pipeline-infrastructure-staging` build trigger:
 
 Review the current builds:
 
@@ -629,17 +630,7 @@ f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipel
 76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
 ```
 
-List the container images:
-
-```
-gcloud container images list --repository gcr.io/${PROJECT_ID}
-```
-```
-NAME
-gcr.io/${PROJECT_ID}/pipeline
-```
-
-List the container image tags:
+List the container images created by the `pipeline-staging-build` build trigger:
 
 ```
 gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
@@ -649,7 +640,7 @@ DIGEST        TAGS                                      TIMESTAMP
 07086bf1e94d  6e2865a45c29974b0b9099fa824fc00d0128de18  2017-11-16T21:37:59
 ```
 
-List the pods in the staging cluster:
+List the pods created by the `pipeline-infrastructure-staging` build trigger:
 
 ```
 kubectl get pods \
@@ -660,28 +651,29 @@ NAME                        READY     STATUS    RESTARTS   AGE
 pipeline-2401200729-tg2hf   1/1       Running   0          3s
 ```
 
-#### Tag the pipeline-application repo
+#### Tag the pipeline-application Repo
 
+In this section you will merge the `new-message` and `master` branches, then create a new tag on the `pipeline-application` GitHub repository, which will trigger a new pipeline container image to be built and deployed to the QA Kubernetes cluster.
+
+Checkout the master branch:
 
 ```
 git checkout master
 ```
 
-```
-git merge new-message
-```
+Merge the `new-message` and `master` branches and push the changes to the `pipeline-applicaiton` GitHub repository:
 
 ```
-git push origin master
+git merge new-message && git push origin master
 ```
 
-```
-git tag 1.0.0
-```
+Create a new `1.0.0` tag and push it to the `pipeline-applicaiton` GitHub repository:
 
 ```
-git push origin --tags
+git tag 1.0.0 && git push origin --tags
 ```
+
+Pushing a new tag to the `pipeline-applicaiton` GitHub repository will trigger the `pipeline-qa-build` build trigger, which will in turn trigger the `pipeline-infrastructure-qa` build trigger.
 
 Review the current builds:
 
@@ -695,7 +687,7 @@ f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipel
 76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
 ```
 
-List the container image tags:
+List the container images created by the `pipeline-qa-build` build trigger:
 
 ```
 gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
@@ -706,7 +698,9 @@ bd6ce000b8ac  1.0.0                                     2017-11-16T22:22:06
 07086bf1e94d  6e2865a45c29974b0b9099fa824fc00d0128de18  2017-11-16T21:37:59
 ```
 
-List the pods in the QA cluster:
+> Notice a new image was created based on the `1.0.0` tag pushed to the `pipeline-application` GitHub repository.
+
+List the pods created by the `pipeline-qa-deployment` build trigger:
 
 ```
 kubectl get pods \
@@ -730,9 +724,11 @@ PIPELINE_IP_ADDRESS=$(kubectl get svc pipeline \
 curl http://${PIPELINE_IP_ADDRESS}
 ```
 
-One the pipeline application is deployed to the QA cluster a pull request is send to the pipeline-infrastructure-production GitHub repository. Review and merge the PR on GitHub:
+Once the pipeline application is deployed to the QA cluster a pull request is send to the `pipeline-infrastructure-production` GitHub repository. Review and merge the PR on GitHub:
 
 ![Image of GitHub UI](images/review-production-pull-request.png)
+
+Merging the pull-request on the `pipeline-infrastructure-production` GitHub repository will trigger the `pipeline-production-deployment` build trigger.
 
 ```
 gcloud container builds list
@@ -746,7 +742,7 @@ f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipel
 76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message           gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
 ```
 
-Once merged verify the pipeline application was deployed to production:
+List the pods created by the `pipeline-production-deployment` build trigger:
 
 ```
 kubectl get pods \
@@ -769,3 +765,7 @@ PIPELINE_IP_ADDRESS=$(kubectl get svc pipeline \
 ```
 curl http://${PIPELINE_IP_ADDRESS}
 ```
+
+At this point the `pipeline:1.0.0` container image has been propagated across each environment and is now running in the production Kubernetes cluster.
+
+## Cleanup
