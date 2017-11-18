@@ -1,6 +1,6 @@
 # Container Builder Build Triggers
 
-In this section you will create the [Container Builder](https://cloud.google.com/container-builder) build triggers necessary to establish an [end-to-end build pipeline](deployment-pipeline.md).
+In this section you will create the following [Container Builder](https://cloud.google.com/container-builder) build triggers necessary to establish an [end-to-end build pipeline](deployment-pipeline.md).
 
 ## Generate Container Builder Build Trigger Configurations
 
@@ -11,6 +11,8 @@ Retrieve the default compute zone and store it in the `COMPUTE_ZONE` env var:
 ```
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 ```
+
+### Generate the `pipeline-staging-build` Build Trigger Configuration File
 
 Create a build trigger that rebuilds the pipeline application container image and updates the Kubernetes deployment configuration files for the staging cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-application` GitHub repository on any branch except the master.
 
@@ -35,6 +37,8 @@ cat <<EOF > pipeline-staging-build-trigger.json
 EOF
 ```
 
+### Generate the `pipeline-qa-build` Build Trigger Configuration File
+
 Create a build trigger that rebuilds the pipeline application container image and updates the Kubernetes deployment configuration files for the qa cluster. This trigger will fire when a new tag is pushed to the `${GITHUB_USERNAME}/pipeline-application` GitHub repository.
 
 ```
@@ -58,6 +62,8 @@ cat <<EOF > pipeline-qa-build-trigger.json
 EOF
 ```
 
+### Generate the `pipeline-staging-deployment` Build Trigger Configuration File
+
 Create a build trigger that applies the Kubernetes deployment configuration files for the staging cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-staging` GitHub repository on the master branch.
 
 ```
@@ -77,6 +83,8 @@ cat <<EOF > pipeline-staging-deployment-trigger.json
 }
 EOF
 ```
+
+### Generate the `pipeline-qa-deployment` Build Trigger Configuration File
 
 Create a build trigger that applies the Kubernetes deployment configuration files for the qa cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-qa` GitHub repository on the master branch.
 
@@ -101,6 +109,8 @@ cat <<EOF > pipeline-qa-deployment-trigger.json
 EOF
 ```
 
+### Generate the `pipeline-production-deployment` Build Trigger Configuration File
+
 Create a build trigger that applies the Kubernetes deployment configuration files for the production cluster. This trigger will fire when changes are pushed to the `${GITHUB_USERNAME}/pipeline-infrastructure-production` GitHub repository on the master branch.
 
 ```
@@ -120,6 +130,10 @@ cat <<EOF > pipeline-production-deployment-trigger.json
 }
 EOF
 ```
+
+## Create the Container Build Triggers
+
+In this section you will create the Cloud Builder build triggers by submitting the build trigger configuration files generated in the previous section using the GCP API.
 
 Create a cloud build trigger for each build trigger configuration file:
 
