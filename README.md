@@ -130,9 +130,7 @@ for e in staging qa production; do
 done
 ```
 
-It may take up to 5 minutes
-
-At this point you should have three Kubernetes clusters running:
+It may take up to five minutes to provision the three Kubernetes clusters. Use the `gcloud` command to check the status of each cluster:
 
 ```
 gcloud container clusters list
