@@ -127,6 +127,18 @@ NAME                        READY     STATUS    RESTARTS   AGE
 pipeline-4128971296-hzds2   1/1       Running   0          1m
 ```
 
+Verify the changes:
+
+```
+SERVICE_IP_ADDRESS=$(kubectl get svc pipeline \
+  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_staging \
+  -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
+
+```
+curl http://${SERVICE_IP_ADDRESS}
+```
+
 ## Tag the pipeline-application Repo
 
 In this section you will merge the `new-message` and `master` branches, then create a new tag on the `pipeline-application` GitHub repository, which will trigger a new pipeline container image to be built and deployed to the QA Kubernetes cluster.
