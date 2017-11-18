@@ -92,3 +92,23 @@ The following client tools are required to complete this tutorial:
  * [git](https://git-scm.com/downloads) 2.14.0+
  * [gcloud](https://cloud.google.com/sdk) 179.0.0+
  * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
+
+ ## Generate a GitHub API Token
+
+ In this section you will generate a [GitHub API Token](https://github.com/blog/1509-personal-api-tokens) which will be used to automate the GitHub related tasks throughout this tutorial.
+
+ Generate a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens). While creating the token, set the token description to "pipeline", and check the `repo` and `admin:repo_hook` scopes.
+
+ ![Image of GitHub UI](images/create-github-token.png)
+
+ Save the token in the `GITHUB_TOKEN` environment variable:
+
+ ```
+ export GITHUB_TOKEN="<token>"
+ ```
+
+ Your GitHub username will be used to automate GitHub related tasks including forking the GitHub repositories necessary to complete this tutorial and creating [GitHub webhooks](https://developer.github.com/webhooks/). Save your GitHub username in the `GITHUB_USERNAME` env var:
+
+ ```
+ export GITHUB_USERNAME="<github-username>"
+ ```
