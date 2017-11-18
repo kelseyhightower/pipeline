@@ -231,6 +231,8 @@ Retrieve the active GCP project number and store it in the `PROJECT_NUMBER` env 
 PROJECT_NUMBER=$(gcloud projects describe ${PROJECT_ID} --format='value(projectNumber)')
 ```
 
+Grant the Container Builder service account access to the `github` encryption key:
+
 ```
 gcloud kms keys add-iam-policy-binding github \
   --location=global \
@@ -239,7 +241,7 @@ gcloud kms keys add-iam-policy-binding github \
   --role=roles/cloudkms.cryptoKeyEncrypterDecrypter
 ```
 
-Grant the Container Builder service account access to Google Container Engine:
+Grant the Container Builder service account access to the Google Container Engine API:
 
 ```
 gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
@@ -247,16 +249,16 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
   --role=roles/container.developer
 ```
 
-### Setup the pipeline repositories
+### Setup the Pipeline Repositories
 
-In this section you will fork the following GitHub repos to your own GitHub account:
+In this section you will fork the following GitHub repositories to your own GitHub account:
 
 * [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
 * [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
 * [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
 * [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
-Clone then fork the pipeline application and infrastructure repos:
+Fork the pipeline application and infrastructure repositories:
 
 ```
 REPOS=(
@@ -277,12 +279,12 @@ for repo in ${REPOS[@]}; do
 done
 ```
 
-At this point the pipeline application and infrastructure repos have been forked to your GitHub account and can used as part of your own deployment pipeline.
+At this point the pipeline application and infrastructure repositories have been forked to your GitHub account and can used as part of your own deployment pipeline.
 
 
 ### Mirror GitHub Repositories to Cloud Source Repositories
 
-Currently Container Builder only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create Cloud Source Repositories that will mirror each of the GitHub pipeline repositories.
+Currently Container Builder only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create the Cloud Source Repositories that will mirror each of the GitHub repositories created in the previous section.
 
 ```
 REPOS=(
@@ -293,7 +295,7 @@ REPOS=(
 )
 ```
 
-For each GitHub repository create a Cloud Source Repository to mirror it:
+For each GitHub repository create a Cloud Source Repository to mirror it, then preform the initial synchronization:
 
 ```
 for r in ${REPOS[@]}; do
@@ -304,7 +306,7 @@ for r in ${REPOS[@]}; do
 done
 ```
 
-At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep them in sync deploy the `reposync` Cloud Function to your project.
+At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep the Cloud Source repositories synchronized deploy the [reposync webhook](https://github.com/kelseyhightower/reposync) to your project.
 
 #### Deploy the reposync Cloud Function
 
