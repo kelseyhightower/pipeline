@@ -1,6 +1,8 @@
 # Container Builder Build Triggers
 
-In this section you will create the following [Container Builder](https://cloud.google.com/container-builder) build triggers necessary to establish an [end-to-end build pipeline](deployment-pipeline.md).
+In this section you will create the [Container Builder](https://cloud.google.com/container-builder) build triggers necessary to establish an [end-to-end build pipeline](deployment-pipeline.md).
+
+![Image of GCP Source Repositories UI](images/build-triggers.png)
 
 ## Generate Container Builder Build Trigger Configurations
 
@@ -157,8 +159,4 @@ for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
 done
 ```
 
-At this point all the build triggers are in place.
-
-![Image of GCP Source Repositories UI](images/build-triggers.png)
-
-It's now time to test the build pipeline.
+At this point all the build triggers are in place. It's now time to test the build pipeline.
