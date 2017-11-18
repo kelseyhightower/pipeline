@@ -34,7 +34,9 @@ The following services are required to complete this tutorial:
 
 ### Enable Google Cloud Platform APIs
 
-In this section you will enable the GCP APIs required to complete this tutorial.
+In this section you will enable the Google Cloud Platform APIs required to complete this tutorial.
+
+Enable the required GCP APIs:
 
 ```
 gcloud services enable --async \
@@ -50,9 +52,14 @@ gcloud services enable --async \
   cloudfunctions.googleapis.com
 ```
 
+In may take several minutes before the GCP APIs become enabled and ready for use. In the meanwhile it's safe to continue with the tutorial. At any point you can use the `gcloud` command to list enabled services:
+
 ```
 gcloud services list --enabled
 ```
+
+output:
+
 ```
 NAME                               TITLE
 bigquery-json.googleapis.com       BigQuery API
