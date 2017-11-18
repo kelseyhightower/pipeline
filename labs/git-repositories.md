@@ -59,7 +59,11 @@ for r in ${REPOS[@]}; do
 done
 ```
 
-At this point the GitHub repositories are mirrored to your Cloud Source Repositories. To keep the Cloud Source repositories synchronized deploy the [reposync webhook](https://github.com/kelseyhightower/reposync) to your project.
+At this point the GitHub repositories are mirrored to your Cloud Source Repositories.
+
+![Image of GCP Source Repositories UI](images/source-repos.png)
+
+To keep the Cloud Source repositories synchronized deploy the [reposync webhook](https://github.com/kelseyhightower/reposync) to your project.
 
 ### Deploy the Repo Sync WebHook
 
