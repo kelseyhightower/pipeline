@@ -97,7 +97,7 @@ The following client tools are required to complete this tutorial:
 
  In this section you will generate a [GitHub API Token](https://github.com/blog/1509-personal-api-tokens) which will be used to automate the GitHub related tasks throughout this tutorial.
 
- Generate a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens). While creating the token, set the token description to "pipeline", and check the `repo` and `admin:repo_hook` scopes.
+ Generate a GitHub token using the official [guide](https://github.com/blog/1509-personal-api-tokens). While creating the token, set the token description to "pipeline-tutorial", and check the `repo` and `admin:repo_hook` scopes.
 
  ![Image of GitHub UI](images/create-github-token.png)
 
