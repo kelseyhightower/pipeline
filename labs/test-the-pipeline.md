@@ -116,7 +116,11 @@ DIGEST        TAGS                                      TIMESTAMP
 df66efd91fc6  e608835eb5aff5dd55ef744eb81fa1628308e0f6  2017-11-18T15:31:41
 ```
 
-List the pods created by the `pipeline-infrastructure-staging` build trigger:
+The `pipeline-staging-deployment` build trigger pushes a commit to the `pipeline-infrastructure-staging` GitHub repository.
+
+![Image of GitHub Staging Repo](images/staging-commit.png)
+
+List the pods created by the `pipeline-staging-deployment` build trigger:
 
 ```
 kubectl get pods \
