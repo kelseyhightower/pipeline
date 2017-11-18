@@ -173,13 +173,13 @@ In this section you will encrypt the hub configuration file using the [Google Ke
 
 A KMS keyring and encryption key is required to encrypt the hub configuration file.
 
-Create a new KMS keyring:
+Create a new keyring:
 
 ```
 gcloud kms keyrings create pipeline --location=global
 ```
 
-Generate a new KMS encryption key that will be used to encrypt the hub configuration file:
+Generate a new encryption key:
 
 ```
 gcloud kms keys create github \
