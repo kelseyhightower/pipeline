@@ -340,16 +340,16 @@ gcloud beta functions deploy reposync \
 
 ### Create the GitHub Webhooks
 
-In this section you will configure each pipeline GitHub repository to send [push events](https://developer.github.com/webhooks/#events) to the `reposync` cloud function.
+In this section you will configure each GitHub repository to send [push events](https://developer.github.com/webhooks/#events) to the `reposync` webhook.
 
-Retrieve the `reposync` webhook URL:
+Retrieve the `reposync` webhook URL from the Cloud Functions API:
 
 ```
 WEBHOOK_URL=$(gcloud beta functions describe reposync \
   --format='value(httpsTrigger.url)')
 ```
 
-Create a GitHub webhook configuration object:
+Create a webhook configuration payload as defined in the [GitHub Webhooks API guide](https://developer.github.com/v3/repos/hooks/#create-a-hook):
 
 ```
 cat <<EOF > github-webhook-config.json
@@ -369,16 +369,19 @@ cat <<EOF > github-webhook-config.json
 EOF
 ```
 
-Create a wehbook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration file:
+Create a wehbook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration payload created in the previous step:
 
 ```
 for repo in ${REPOS[@]}; do
   curl -X POST "https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/hooks" \
+    -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.v3+json" \
     -u "${GITHUB_USERNAME}:${GITHUB_TOKEN}" \
     --data-binary @github-webhook-config.json
 done
 ```
+
+Each GitHub repositories is now set to send push events to the `reposync` webhook.
 
 ### Create the Cloud Container Builder Build Triggers
 
