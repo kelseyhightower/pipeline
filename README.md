@@ -58,7 +58,7 @@ In may take several minutes before the GCP APIs become enabled and ready for use
 gcloud services list --enabled
 ```
 
-output:
+> output
 
 ```
 NAME                               TITLE
