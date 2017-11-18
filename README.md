@@ -16,7 +16,7 @@ This tutorial will set up a pipeline to deploy the [pipeline application](https:
 
 ## Prerequisites
 
-* [Review the Deployment Pipeline](labs/the-deployment-pipeline.md)
+* [Review the Deployment Pipeline](labs/deployment-pipeline.md)
 * [Prerequisites](labs/prerequisites.md)
 
 ## Tutorial

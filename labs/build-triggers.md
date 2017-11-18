@@ -1,6 +1,10 @@
-### Cloud Container Builder Build Triggers
+# Container Builder Build Triggers
 
-In this section you will create the Cloud Container Builder build triggers necessary to establish an end-to-end build pipeline described at the start of this tutorial.
+In this section you will create the [Container Builder](https://cloud.google.com/container-builder) build triggers necessary to establish an [end-to-end build pipeline](deployment-pipeline.md).
+
+## Generate Container Builder Build Trigger Configurations
+
+In this section you will generate the build trigger configuration payloads that will be used to automated the creation of the Container Builder build triggers hosted on GCP.
 
 Retrieve the default compute zone and store it in the `COMPUTE_ZONE` env var:
 
