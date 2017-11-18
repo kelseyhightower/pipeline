@@ -106,6 +106,8 @@ cloudbuild.googleapis.com          Google Cloud Container Builder API
 cloudfunctions.googleapis.com      Google Cloud Functions API
 ```
 
+Link a billing account to the `pipeline-tutorial` project as described here: [Modify a Project's Billing Settings](https://cloud.google.com/billing/docs/how-to/modify-project)
+
 ### Client Tools
 
 The following client tools are required to complete this tutorial:
