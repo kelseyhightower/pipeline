@@ -1,5 +1,7 @@
 # Prerequisites
 
+In this section you will set up the necessary services and client tools required to complete this tutorial.
+
 ## Services
 
 The following services are required to complete this tutorial:
@@ -9,9 +11,9 @@ The following services are required to complete this tutorial:
 
 ## Create a New Project and Enable Google Cloud Platform APIs
 
-In this section you will create a new GCP project and enable the Google Cloud Platform APIs required to complete this tutorial.
+In this section you will create a new GCP project and enable the GCP APIs required to complete this tutorial.
 
-Create a new project named `pipeline-tutorial` and capture the projectId in the `PROJECT_ID` env var:
+Create a new GCP project named `pipeline-tutorial` and capture the projectId in the `PROJECT_ID` env var:
 
 ```
 PROJECT_ID=$(gcloud projects create \
@@ -21,7 +23,7 @@ PROJECT_ID=$(gcloud projects create \
 
 > At the prompt type 'y' to accept generated project id.
 
-Set the default project:
+Set the default project to the `pipeline-tutorial` project:
 
 ```
 gcloud config set project ${PROJECT_ID}
