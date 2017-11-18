@@ -385,9 +385,9 @@ Each GitHub repositories is now set to send push events to the `reposync` webhoo
 
 ### Create the Cloud Container Builder Build Triggers
 
-In this section you will create the Cloud Container Builder build triggers necessary to establish the end-to-end build pipeline described at the start of this tutorial.
+In this section you will create the Cloud Container Builder build triggers necessary to establish an end-to-end build pipeline described at the start of this tutorial.
 
-Retrieve the default compute zone:
+Retrieve the default compute zone and store it in the `COMPUTE_ZONE` env var:
 
 ```
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
@@ -528,39 +528,22 @@ At this point all the build triggers are in place. It's now time to test the bui
 
 ### Test the Pipeline
 
+In this section you will test the Cloud Builder build pipeline by making modifications to the pipeline application and observing how the each change propagates through the staging, qa, and production environments.
+
 Ensure you have the cluster credentials for each Kubernetes cluster:
 
 ```
-gcloud container clusters get-credentials staging
+for e in staging qa production; do
+  gcloud container clusters get-credentials ${e}
+done
 ```
 
-```
-gcloud container clusters get-credentials qa
-```
+Verify no pods are currently running in any environment:
 
 ```
-gcloud container clusters get-credentials production
-```
-
-Ensure no pods are currently running in the default namespace in the staging cluster:
-
-```
-kubectl get pods \
-  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_staging
-```
-
-Ensure no pods are currently running in the default namespace in the qa cluster:
-
-```
-kubectl get pods \
-  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_qa
-```
-
-Ensure no pods are currently running in the default namespace in the production cluster:
-
-```
-kubectl get pods \
-  --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_production
+for e in staging qa production; do
+  kubectl get pods --context "gke_${PROJECT_ID}_${COMPUTE_ZONE}_${e}"
+done
 ```
 
 #### Update the pipeline-application
