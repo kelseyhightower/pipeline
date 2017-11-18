@@ -123,7 +123,7 @@ Generate a GitHub token using the official [guide](https://github.com/blog/1509-
 
 ![Image of GitHub UI](images/create-github-token.png)
 
-> Set the token description to "pipeline" and check the repo and admin:repo_hook scopes.  
+> Set the token description to "pipeline" and check the `repo` and `admin:repo_hook` scopes.  
 
 Save the token in the `GITHUB_TOKEN` environment variable:
 
