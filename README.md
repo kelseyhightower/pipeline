@@ -32,9 +32,17 @@ The following services are required to complete this tutorial:
 * [GitHub](https://github.com)
 * [Google Cloud Platform](https://console.cloud.google.com/freetrial)
 
-### Enable Google Cloud Platform APIs
+### Create a New Project and Enable Google Cloud Platform APIs
 
-In this section you will enable the Google Cloud Platform APIs required to complete this tutorial.
+In this section you will create a new GCP project and enable the Google Cloud Platform APIs required to complete this tutorial.
+
+Create a new project named `pipeline-tutorial` and set it as the default project:
+
+```
+gcloud projects create --name "pipeline-tutorial" --set-as-default
+```
+
+> At the prompt type 'y' to accept generated project id.
 
 Enable the required GCP APIs:
 
