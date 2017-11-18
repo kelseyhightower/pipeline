@@ -97,10 +97,14 @@ Review the current builds:
 gcloud container builds list
 ```
 ```
-ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                      STATUS
-f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipeline-infrastructure-staging@master  -                                                                           SUCCESS
-76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
+ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                               STATUS
+2a14e7b4-278b-41e0-8eb6-b584d0732761  2017-11-18T23:32:26+00:00  10S       pipeline-infrastructure-staging@master  -                                                                                    SUCCESS
+44248424-1b5b-4f2b-a95d-66280800611d  2017-11-18T23:31:02+00:00  1M24S     pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:e608835eb5aff5dd55ef744eb81fa1628308e0f6  SUCCESS
 ```
+
+You can also view the build history using the GCP Console:
+
+![Image of GCP Build History UI](images/build-history.png)
 
 List the container images created by the `pipeline-staging-build` build trigger:
 
@@ -109,7 +113,7 @@ gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
 ```
 ```
 DIGEST        TAGS                                      TIMESTAMP
-07086bf1e94d  6e2865a45c29974b0b9099fa824fc00d0128de18  2017-11-16T21:37:59
+df66efd91fc6  e608835eb5aff5dd55ef744eb81fa1628308e0f6  2017-11-18T15:31:41
 ```
 
 List the pods created by the `pipeline-infrastructure-staging` build trigger:
@@ -120,7 +124,7 @@ kubectl get pods \
 ```
 ```
 NAME                        READY     STATUS    RESTARTS   AGE
-pipeline-2401200729-tg2hf   1/1       Running   0          3s
+pipeline-4128971296-hzds2   1/1       Running   0          1m
 ```
 
 ## Tag the pipeline-application Repo
