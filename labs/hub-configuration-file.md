@@ -23,7 +23,7 @@ HUB_CONFIG="${PWD}/hub"
 
 ## Encrypt the Hub Configuration File and Upload to Google Cloud Storage
 
-In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket, which will make the hub configuration file securely available during any automated build steps performed by Cloud Container Builder in the future.
+In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms)(KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage)(GCS) bucket. Preforming these tasks will make the hub configuration file securely available to any automated build steps performed by Cloud Container Builder.
 
 ### Create a KMS Keyring and Encryption Key
 
