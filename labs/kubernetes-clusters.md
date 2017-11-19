@@ -40,4 +40,14 @@ qa          us-west1-c  1.7.8-gke.0     XX.XXX.XX.XX   n1-standard-1  1.7.8-gke.
 staging     us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
 ```
 
+## Grant the Container Builder Service Account access to the Google Kubernetes Engine API
+
+The Container Builder service needs the ability to fetch GKE credentials and apply changes to each Kubernetes cluster. Grant the Container Builder service account developer access to the GKE API.
+
+```
+gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
+  --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+  --role=roles/container.developer
+```
+
 Next: [Create a Hub Configuration File](hub-configuration-file.md)
