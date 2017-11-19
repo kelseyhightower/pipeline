@@ -159,6 +159,8 @@ for config in ${BUILD_TRIGGER_CONFIGS[@]}; do
 done
 ```
 
-At this point all the build triggers are in place. It's now time to test the build pipeline.
+At this point all the build triggers are in place.
+
+![Image of GCP Build Triggers UI](images/build-triggers.png)
 
 Next: [Test the Pipeline](test-the-pipeline.md)
