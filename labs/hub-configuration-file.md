@@ -1,6 +1,6 @@
 # Create a Hub Configuration File
 
-In this section you will generate a [hub configuration file](https://hub.github.com/hub.1.html#CONFIGURATION) to hold the GitHub credentials generated in the [prerequisites lab](prerequisites.md#generate-a-github-api-token). The hub configuration file is used by the `hub` command line utility when automating GitHub related tasks.
+In this section you will generate a [hub configuration file](https://hub.github.com/hub.1.html#CONFIGURATION) to hold the GitHub credentials generated in the [prerequisites lab](prerequisites.md#generate-a-github-api-token). The hub configuration file is used by the `hub` command when automating GitHub related tasks.
 
 Create a hub configuration file in the current directory:
 
