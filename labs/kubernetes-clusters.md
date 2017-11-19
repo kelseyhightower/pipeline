@@ -2,12 +2,22 @@
 
 In this section you will create three Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine). Each cluster will represent one of the following environments: staging, qa, production.
 
-## Create three Kubernetes Clusters
+## Create the Kubernetes Clusters
 
-Create the `staging`, `qa`, and `production` Kubernetes clusters:
+Set the list of environments:
 
 ```
-for e in staging qa production; do
+ENVIRONMENTS=(
+  staging
+  qa
+  production
+)
+```
+
+Create a Kubernetes clusters for each environment:
+
+```
+for e in ${ENVIRONMENTS[@]}; do
   gcloud container clusters create ${e} --async --num-nodes 1
 done
 ```
