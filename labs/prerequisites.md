@@ -114,3 +114,5 @@ Your GitHub username will be used to automate GitHub related tasks including for
 ```
 export GITHUB_USERNAME="<github-username>"
 ```
+
+Next: [Provision the Kubernetes Clusters](kubernetes-clusters.md)
