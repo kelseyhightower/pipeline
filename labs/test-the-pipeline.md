@@ -128,7 +128,7 @@ DIGEST        TAGS                                      TIMESTAMP
 e4992a4e2d9c  ebdea5007926c3365574c3f49b0226f49a50f3fc  2017-11-18T23:37:08
 ```
 
-The `pipeline-staging-deployment` build trigger pushes a commit to the `pipeline-infrastructure-staging` GitHub repository.
+The `pipeline-staging-build` build trigger pushes a commit to the `pipeline-infrastructure-staging` GitHub repository.
 
 ![Image of GitHub Staging Repo](images/staging-commit.png)
 
@@ -178,6 +178,10 @@ git tag 1.0.0 && git push origin --tags
 ```
 
 Pushing a new tag to the `pipeline-applicaiton` GitHub repository will trigger the `pipeline-qa-build` build trigger, which will in turn trigger the `pipeline-infrastructure-qa` build trigger.
+
+The `pipeline-qa-build` build trigger pushes a commit to the `pipeline-infrastructure-qa` GitHub repository.
+
+![Image of GitHub Staging Repo](images/qa-commit.png)
 
 Review the current builds:
 
