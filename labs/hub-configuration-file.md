@@ -57,6 +57,8 @@ gcloud kms encrypt \
 
 The encrypted hub configuration file is now available in the current directory:
 
+> output
+
 ```
 hub.enc
 ```
