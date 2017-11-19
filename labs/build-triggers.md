@@ -160,3 +160,5 @@ done
 ```
 
 At this point all the build triggers are in place. It's now time to test the build pipeline.
+
+Next: [Test the Pipeline](test-the-pipeline.md)
