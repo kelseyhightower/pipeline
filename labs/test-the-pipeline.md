@@ -106,12 +106,12 @@ Pushing a new branch to the `pipeline-application` GitHub repository will trigge
 Review the current builds:
 
 ```
-gcloud container builds list
+gcloud container builds list --limit 2
 ```
 ```
-ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                               STATUS
-2a14e7b4-278b-41e0-8eb6-b584d0732761  2017-11-18T23:32:26+00:00  10S       pipeline-infrastructure-staging@master  -                                                                                    SUCCESS
-44248424-1b5b-4f2b-a95d-66280800611d  2017-11-18T23:31:02+00:00  1M24S     pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:e608835eb5aff5dd55ef744eb81fa1628308e0f6  SUCCESS
+ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                      STATUS
+642e4532-a883-44ed-b56d-8d98f36ea2a2  2017-11-19T07:37:53+00:00  13S       pipeline-infrastructure-staging@master  -                                                                           SUCCESS
+8b0ee744-b5c7-4bf7-9f37-296fdc7ffb85  2017-11-19T07:36:43+00:00  1M4S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:ebdea5007926c3365574c3f49b0226f49a50f3fc  SUCCESS
 ```
 
 You can also view the build history using the GCP Console:
