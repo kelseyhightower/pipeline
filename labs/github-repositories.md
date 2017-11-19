@@ -51,11 +51,12 @@ REPOS=(
 For each GitHub repository create a Cloud Source Repository to mirror it, then preform the initial synchronization:
 
 ```
-for r in ${REPOS[@]}; do
-  gcloud source repos create ${r}
-  git clone --mirror https://github.com/${GITHUB_USERNAME}/${r}
-  git --git-dir ${r}.git push --mirror \
-    --repo "https://source.developers.google.com/p/${PROJECT_ID}/r/${r}"
+for repo in ${REPOS[@]}; do
+  gcloud source repos create ${repo}
+  git clone --mirror https://github.com/${GITHUB_USERNAME}/${repo}
+  git --git-dir ${repo}.git push --mirror \
+    --repo "https://source.developers.google.com/p/${PROJECT_ID}/r/${repo}"
+  rm -rf ${repo}.git
 done
 ```
 
