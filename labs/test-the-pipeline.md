@@ -272,3 +272,5 @@ curl http://${SERVICE_IP_ADDRESS}
 ```
 
 At this point the `pipeline:1.0.0` container image has been propagated across each environment and is now running in the production Kubernetes cluster.
+
+![Image of GitHub UI](images/build-history-complete.png)
