@@ -6,7 +6,7 @@ In this section you will create a Kubernetes clusters using [Google Kubernetes E
 * qa
 * production
 
-Using dedicated Kubernetes clusters provides better isolation between environments which can result in simpler cluster permissions and configurations.
+Using dedicated Kubernetes clusters provides better isolation between environments which can result in simpler cluster configurations.
 
 ## Create the Kubernetes Clusters
 
