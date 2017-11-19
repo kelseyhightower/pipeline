@@ -2,6 +2,8 @@
 
 In this section you will test the Cloud Builder build pipeline by making modifications to the pipeline application and observing how the each change propagates through the staging, qa, and production environments.
 
+## Retrieve the Cluster Credentials
+
 Ensure you have the cluster credentials for each Kubernetes cluster:
 
 Set the list of environments:
