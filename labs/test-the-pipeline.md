@@ -25,7 +25,7 @@ done
 Verify no pods are currently running in any environment:
 
 ```
-for e in staging qa production; do
+for e in ${ENVIRONMENTS[@]}; do
   kubectl get pods --context "gke_${PROJECT_ID}_${COMPUTE_ZONE}_${e}"
 done
 ```
