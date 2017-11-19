@@ -1,4 +1,4 @@
-# Git Repositories
+# Setup the GitHub Repositories
 
 In this section you will fork the following GitHub repositories to your own GitHub account:
 
