@@ -28,3 +28,5 @@ This tutorial will set up a pipeline to deploy the [pipeline application](https:
 * [Test the Pipeline](labs/test-the-pipeline.md)
 
 ## Cleanup
+
+* [Cleaning Up](labs/cleanup.md)
