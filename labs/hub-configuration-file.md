@@ -55,6 +55,12 @@ gcloud kms encrypt \
   --key=github
 ```
 
+The encrypted hub configuration file is now available in the current directory:
+
+```
+hub.enc
+```
+
 ### Upload the Encrypted Hub Configuration File to GCS
 
 In this section you will create a GCS bucket and upload the encrypted hub configuration file to it.
