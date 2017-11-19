@@ -182,13 +182,14 @@ Pushing a new tag to the `pipeline-applicaiton` GitHub repository will trigger t
 Review the current builds:
 
 ```
-gcloud container builds list
+gcloud container builds list --limit 4
 ```
 ```
 ID                                    CREATE_TIME                DURATION  SOURCE                                  IMAGES                                                                      STATUS
-231edd08-805e-41f7-a2a6-1cd2d25d839b  2017-11-17T06:21:37+00:00  1M1S      pipeline-application@1.0.0              gcr.io/pipeline-tutorial/pipeline:1.0.0                                     SUCCESS
-f2f05c4f-e49b-4f7a-bbfb-336dc65ff059  2017-11-17T05:41:09+00:00  12S       pipeline-infrastructure-staging@master  -                                                                           SUCCESS
-76db0956-0514-42f5-babb-aad21fdb5689  2017-11-17T05:37:34+00:00  1M2S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:6e2865a45c29974b0b9099fa824fc00d0128de18  SUCCESS
+3e2553c3-7c01-40a6-8faa-bcec0c24307e  2017-11-19T08:06:50+00:00  44S       pipeline-infrastructure-qa@master       -                                                                           SUCCESS
+93917589-4ccf-458e-b1bf-71e3a8ad15ae  2017-11-19T08:05:39+00:00  1M7S      pipeline-application@1.0.0              gcr.io/pipeline-tutorial/pipeline:1.0.0                                     SUCCESS
+642e4532-a883-44ed-b56d-8d98f36ea2a2  2017-11-19T07:37:53+00:00  13S       pipeline-infrastructure-staging@master  -                                                                           SUCCESS
+8b0ee744-b5c7-4bf7-9f37-296fdc7ffb85  2017-11-19T07:36:43+00:00  1M4S      pipeline-application@new-message        gcr.io/pipeline-tutorial/pipeline:ebdea5007926c3365574c3f49b0226f49a50f3fc  SUCCESS
 ```
 
 List the container images created by the `pipeline-qa-build` build trigger:
