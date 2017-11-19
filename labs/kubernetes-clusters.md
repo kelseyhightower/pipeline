@@ -1,6 +1,12 @@
 # Provision Kubernetes Clusters
 
-In this section you will create three Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine). Each cluster will represent one of the following environments: staging, qa, production.
+In this section you will create a Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) for each of the following environments:
+
+* staging
+* qa
+* production
+
+Using dedicated Kubernetes clusters provides better isolation between environments which can result in simpler cluster permissions and configurations.
 
 ## Create the Kubernetes Clusters
 
@@ -22,7 +28,7 @@ for e in ${ENVIRONMENTS[@]}; do
 done
 ```
 
-It may take up to five minutes to provision the three Kubernetes clusters. Use the `gcloud` command to check the status of each cluster:
+It can take up to five minutes to provision the Kubernetes clusters. Use the `gcloud` command to check the status of each cluster:
 
 ```
 gcloud container clusters list
@@ -33,3 +39,5 @@ production  us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.
 qa          us-west1-c  1.7.8-gke.0     XX.XXX.XX.XX   n1-standard-1  1.7.8-gke.0   1          RUNNING
 staging     us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
 ```
+
+Next: [Create a Hub Configuration File](hub-configuration-file.md)
