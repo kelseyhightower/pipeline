@@ -55,13 +55,7 @@ gcloud kms encrypt \
   --key=github
 ```
 
-The encrypted hub configuration file is now available in the current directory:
-
-> output
-
-```
-hub.enc
-```
+The encrypted hub configuration file `hub.enc` is now available in the current directory.
 
 ### Upload the Encrypted Hub Configuration File to GCS
 
