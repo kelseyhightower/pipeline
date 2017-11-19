@@ -199,8 +199,8 @@ gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
 ```
 ```
 DIGEST        TAGS                                      TIMESTAMP
-bd6ce000b8ac  1.0.0                                     2017-11-16T22:22:06
-07086bf1e94d  6e2865a45c29974b0b9099fa824fc00d0128de18  2017-11-16T21:37:59
+fc894ced8191  1.0.0                                     2017-11-19T00:06:05
+e4992a4e2d9c  ebdea5007926c3365574c3f49b0226f49a50f3fc  2017-11-18T23:37:08
 ```
 
 > Notice a new image was created based on the `1.0.0` tag pushed to the `pipeline-application` GitHub repository.
@@ -214,19 +214,19 @@ kubectl get pods \
 
 ```
 NAME                       READY     STATUS    RESTARTS   AGE
-pipeline-685432654-vsz7h   1/1       Running   0          1m
+pipeline-685432654-h4zhc   1/1       Running   0          1m
 ```
 
 Hit the pipeline application in the QA cluster:
 
 ```
-PIPELINE_IP_ADDRESS=$(kubectl get svc pipeline \
+SERVICE_IP_ADDRESS=$(kubectl get svc pipeline \
   --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_qa \
   -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 ```
 
 ```
-curl http://${PIPELINE_IP_ADDRESS}
+curl http://${SERVICE_IP_ADDRESS}
 ```
 
 Once the pipeline application is deployed to the QA cluster a pull request is send to the `pipeline-infrastructure-production` GitHub repository. Review and merge the PR on GitHub:
