@@ -21,11 +21,11 @@ This tutorial will set up a pipeline to deploy the [pipeline application](https:
 
 ## Tutorial
 
-* [Provision Kubernetes Clusters](labs/kubernetes-clusters.md)
+* [Provision the Kubernetes Clusters](labs/kubernetes-clusters.md)
 * [Create a Hub Configuration File](labs/hub-configuration-file.md)
 * [Setup the GitHub Repositories](labs/github-repositories.md)
-* [Container Builder Build Triggers](labs/build-triggers.md)
-* [Test the Pipeline](labs/test-the-pipeline.md)
+* [Create the Container Builder Build Triggers](labs/build-triggers.md)
+* [Test the Build Pipeline](labs/test-the-pipeline.md)
 
 ## Cleanup
 
