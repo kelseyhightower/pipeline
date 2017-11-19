@@ -144,4 +144,4 @@ done
 
 Each GitHub repositories is now set to send push events to the `reposync` webhook.
 
-Next: [Cloud Container Builder Build Triggers](build-triggers.md)
+Next: [Container Builder Build Triggers](build-triggers.md)
