@@ -15,7 +15,7 @@ github.com:
 EOF
 ```
 
-Set the `HUB_CONFIG` environment variable to point to the hub configuration file:
+Set the `HUB_CONFIG` environment variable to point to the generated hub configuration file:
 
 ```
 HUB_CONFIG="${PWD}/hub"
