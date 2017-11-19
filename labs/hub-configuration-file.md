@@ -104,3 +104,5 @@ gcloud kms keys add-iam-policy-binding github \
   --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
   --role=roles/cloudkms.cryptoKeyEncrypterDecrypter
 ```
+
+[Setup the Git Repositories](git-repositories.md)
