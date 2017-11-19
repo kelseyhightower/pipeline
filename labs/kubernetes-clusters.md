@@ -1,6 +1,6 @@
 # Provision Kubernetes Clusters
 
-In this section you will create a Kubernetes clusters using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) for each of the following environments:
+In this section you will create a Kubernetes cluster using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) for each of the following environments:
 
 * staging
 * qa
