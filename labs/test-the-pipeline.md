@@ -125,7 +125,7 @@ gcloud container images list-tags gcr.io/${PROJECT_ID}/pipeline
 ```
 ```
 DIGEST        TAGS                                      TIMESTAMP
-df66efd91fc6  e608835eb5aff5dd55ef744eb81fa1628308e0f6  2017-11-18T15:31:41
+e4992a4e2d9c  ebdea5007926c3365574c3f49b0226f49a50f3fc  2017-11-18T23:37:08
 ```
 
 The `pipeline-staging-deployment` build trigger pushes a commit to the `pipeline-infrastructure-staging` GitHub repository.
