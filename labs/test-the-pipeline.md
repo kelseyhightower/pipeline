@@ -4,8 +4,6 @@ In this section you will test the Cloud Builder build pipeline by making modific
 
 ## Retrieve the Cluster Credentials
 
-Ensure you have the cluster credentials for each Kubernetes cluster:
-
 Set the list of environments:
 
 ```
@@ -15,6 +13,8 @@ ENVIRONMENTS=(
   production
 )
 ```
+
+Retrieve the Kubernetes cluster credentials for each environment:
 
 ```
 for e in ${ENVIRONMENTS[@]}; do
