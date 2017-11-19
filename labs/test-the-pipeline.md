@@ -139,8 +139,8 @@ kubectl get pods \
   --context gke_${PROJECT_ID}_${COMPUTE_ZONE}_staging
 ```
 ```
-NAME                        READY     STATUS    RESTARTS   AGE
-pipeline-4128971296-hzds2   1/1       Running   0          1m
+NAME                       READY     STATUS    RESTARTS   AGE
+pipeline-389525417-68nxn   1/1       Running   0          1m
 ```
 
 Verify the changes:
