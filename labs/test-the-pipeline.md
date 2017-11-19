@@ -4,8 +4,18 @@ In this section you will test the Cloud Builder build pipeline by making modific
 
 Ensure you have the cluster credentials for each Kubernetes cluster:
 
+Set the list of environments:
+
 ```
-for e in staging qa production; do
+ENVIRONMENTS=(
+  staging
+  qa
+  production
+)
+```
+
+```
+for e in ${ENVIRONMENTS[@]}; do
   gcloud container clusters get-credentials ${e}
 done
 ```
