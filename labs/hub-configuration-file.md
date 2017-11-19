@@ -105,4 +105,4 @@ gcloud kms keys add-iam-policy-binding github \
   --role=roles/cloudkms.cryptoKeyEncrypterDecrypter
 ```
 
-[Setup the Git Repositories](git-repositories.md)
+Next: [Setup the Git Repositories](git-repositories.md)
