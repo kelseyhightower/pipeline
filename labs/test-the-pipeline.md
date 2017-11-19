@@ -34,7 +34,7 @@ done
 
 In this section you will modify the pipeline application and push the changes to a new branch on your pipeline-application GitHub repository.
 
-Configure git to ensure the hub command line utility uses the HTTPS protocol will working with GitHub repositories:
+Configure git to ensure the hub command line utility uses the HTTPS protocol when working with GitHub repositories:
 
 ```
 git config --global hub.protocol https
