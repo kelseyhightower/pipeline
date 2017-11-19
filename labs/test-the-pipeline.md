@@ -116,7 +116,7 @@ ID                                    CREATE_TIME                DURATION  SOURC
 
 You can also view the build history using the GCP Console:
 
-![Image of GCP Build History UI](images/build-history.png)
+![GCP Build History UI](images/build-history.png)
 
 List the container images created by the `pipeline-staging-build` build trigger:
 
