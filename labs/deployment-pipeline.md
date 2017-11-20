@@ -4,9 +4,9 @@ The heavy lifting of the deployment pipeline is done by [Cloud Container Builder
 
 Take a moment to study the Container Builder build requests files (cloudbuild.yaml) across the various GitHub repositories to get a sense of how the pipeline fits together:
 
-* [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
-* [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
-* [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
+* [pipeline-application](https://github.com/kelseyhightower/pipeline-application)
+* [pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
+* [pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
 * [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
 ## High Level Diagram

@@ -6,10 +6,10 @@ In this section you will create a set of GitHub repositories which hold the Clou
 
 In this section you will fork the following GitHub repositories to your own GitHub account:
 
-* [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
-* [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
-* [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
-* [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
+* [pipeline-application](https://github.com/kelseyhightower/pipeline-application)
+* [pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
+* [pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
+* [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
 > Take a moment to review the each GitHub repository and step through the directory structure.
 
