@@ -12,6 +12,8 @@ Ensure the default credentials are available on your local machine:
 gcloud auth application-default login
 ```
 
+Ensure you have a default zone configured as describe in the [prerequisites lab](labs/prerequisites.md)
+
 ## Generate Container Builder Build Trigger Configurations
 
 In this section you will generate the build trigger configuration payloads that will be used to automated the creation of the Container Builder build triggers hosted on GCP.
