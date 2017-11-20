@@ -31,6 +31,14 @@ gcloud config set project ${PROJECT_ID}
 
 > Creating new projects with the `--set-as-default` flag does not seem to work as of gcloud version (Google Cloud SDK 180.0.0) and results in the core/project property being set to None. As a workaround the projectId is being extracted from the output of the gcloud command and stored in an env var and set manually.
 
+Set the default zone:
+
+```
+gcloud config set compute/zone us-west1-c
+```
+
+> Run the `gcloud compute zones list` command to find the zone closest to you.
+
 Enable the required GCP APIs:
 
 ```
