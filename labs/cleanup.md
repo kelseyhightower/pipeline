@@ -1,5 +1,8 @@
 # Cleanup
 
+## GCP Resources
+
+Delete the GCP project created in the [prerequisites lab](prerequisites.md#create-a-new-project-and-enable-google-cloud-platform-apis). This will shutdown the compute resources create during this tutorial and schedule the project for deletion.
 
 ## Delete GitHub Repositories
 
