@@ -7,7 +7,7 @@ Take a moment to study the Container Builder build requests files (cloudbuild.ya
 * [pipeline-application](https://github.com/kelseyhightower/pipeline-application)
 * [pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
 * [pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
-* [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
+* [pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
 
 ## High Level Diagram
 
