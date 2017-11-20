@@ -1,11 +1,17 @@
 # Setup the GitHub Repositories
 
+In this section you will create a set of GitHub repositories which hold the Cloud Builder [build requests](https://cloud.google.com/container-builder/docs/concepts/build-requests) and the pipeline application code, a set of [Cloud Source Repositories](https://cloud.google.com/source-repositories) to mirror them to your GCP project, and provision a GitHub webhook to keep them synchronized.
+
+## Fork the Pipeline Application and Infrastructure Repositories
+
 In this section you will fork the following GitHub repositories to your own GitHub account:
 
 * [kelseyhightower/pipeline-application](https://github.com/kelseyhightower/pipeline-application)
 * [kelseyhightower/pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)
 * [kelseyhightower/pipeline-infrastructure-qa](https://github.com/kelseyhightower/pipeline-infrastructure-qa)
 * [kelseyhightower/pipeline-infrastructure-production](https://github.com/kelseyhightower/pipeline-infrastructure-production)
+
+> Take a moment to review the each GitHub repository and step through the directory structure.
 
 Set the list of repository names:
 
@@ -31,7 +37,6 @@ done
 ```
 
 At this point the pipeline application and infrastructure repositories have been forked to your GitHub account and can used as part of your own deployment pipeline.
-
 
 ## Mirror GitHub Repositories to Cloud Source Repositories
 
