@@ -37,6 +37,12 @@ Set the default zone:
 gcloud config set compute/zone us-west1-c
 ```
 
+Ensure the default credentials are available on your local machine:
+
+```
+gcloud auth application-default login
+```
+
 > Run the `gcloud compute zones list` command to find the zone closest to you.
 
 Enable the required GCP APIs:

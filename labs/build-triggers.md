@@ -4,6 +4,14 @@ In this section you will create the [Container Builder](https://cloud.google.com
 
 ![Image of GCP Build Triggers UI](images/build-triggers-empty.png)
 
+## Prerequisites
+
+Ensure the default credentials are available on your local machine:
+
+```
+gcloud auth application-default login
+```
+
 ## Generate Container Builder Build Trigger Configurations
 
 In this section you will generate the build trigger configuration payloads that will be used to automated the creation of the Container Builder build triggers hosted on GCP.
