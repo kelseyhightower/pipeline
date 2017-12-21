@@ -165,19 +165,19 @@ Checkout the master branch:
 git checkout master
 ```
 
-Merge the `new-message` and `master` branches and push the changes to the `pipeline-applicaiton` GitHub repository:
+Merge the `new-message` and `master` branches and push the changes to the `pipeline-application` GitHub repository:
 
 ```
 git merge new-message && git push origin master
 ```
 
-Create a new `1.0.0` tag and push it to the `pipeline-applicaiton` GitHub repository:
+Create a new `1.0.0` tag and push it to the `pipeline-application` GitHub repository:
 
 ```
 git tag 1.0.0 && git push origin --tags
 ```
 
-Pushing a new tag to the `pipeline-applicaiton` GitHub repository will trigger the `pipeline-qa-build` build trigger, which will in turn trigger the `pipeline-infrastructure-qa` build trigger.
+Pushing a new tag to the `pipeline-application` GitHub repository will trigger the `pipeline-qa-build` build trigger, which will in turn trigger the `pipeline-infrastructure-qa` build trigger.
 
 The `pipeline-qa-build` build trigger pushes a commit to the `pipeline-infrastructure-qa` GitHub repository.
 
