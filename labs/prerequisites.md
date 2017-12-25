@@ -61,7 +61,7 @@ gcloud services enable --async \
   cloudfunctions.googleapis.com
 ```
 
-In can take several minutes before the GCP APIs are enabled and ready for use. In the meanwhile it's safe to continue the tutorial. At any point you can use the `gcloud` command to list enabled services:
+It can take several minutes before the GCP APIs are enabled and ready for use. In the meanwhile it's safe to continue the tutorial. At any point you can use the `gcloud` command to list enabled services:
 
 ```
 gcloud services list --enabled
