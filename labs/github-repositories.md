@@ -132,7 +132,7 @@ cat <<EOF > github-webhook-config.json
 EOF
 ```
 
-Create a wehbook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration payload created in the previous step:
+Create a webhook on each pipeline application and infrastructure GitHub repository using the `github-webhook-config.json` webhook configuration payload created in the previous step:
 
 ```
 export GITHUB_TOKEN=$(cat .pipeline-tutorial-github-api-token)
