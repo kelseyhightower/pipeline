@@ -11,7 +11,7 @@ Take a moment to study the Container Builder build requests files (cloudbuild.ya
 
 ## High Level Diagram
 
-Coming soon.
+![Image of Pipeline](images/KH_Kube_Pipeline_Graph.png)
 
 ## High Level Text Description
 
