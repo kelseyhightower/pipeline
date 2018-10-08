@@ -9,6 +9,16 @@ The following services are required to complete this tutorial:
 * [GitHub](https://github.com)
 * [Google Cloud Platform](https://console.cloud.google.com/freetrial)
 
+## Install the Client Tools
+
+The following client tools are required to complete this tutorial:
+
+ * [hub](https://github.com/github/hub) 2.3.0+
+ * [hub-credential-helper](https://github.com/kelseyhightower/hub-credential-helper) 0.0.1+
+ * [git](https://git-scm.com/downloads) 2.14.0+
+ * [gcloud](https://cloud.google.com/sdk) 179.0.0+
+ * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
+
 ## Create a New Project and Enable Google Cloud Platform APIs
 
 In this section you will create a new GCP project and enable the GCP APIs required to complete this tutorial.
@@ -98,16 +108,6 @@ cloudfunctions.googleapis.com      Google Cloud Functions API
 ```
 
 Link a billing account to the `pipeline-tutorial` project as described here: [Modify a Project's Billing Settings](https://cloud.google.com/billing/docs/how-to/modify-project)
-
-## Install the Client Tools
-
-The following client tools are required to complete this tutorial:
-
- * [hub](https://github.com/github/hub) 2.3.0+
- * [hub-credential-helper](https://github.com/kelseyhightower/hub-credential-helper) 0.0.1+
- * [git](https://git-scm.com/downloads) 2.14.0+
- * [gcloud](https://cloud.google.com/sdk) 179.0.0+
- * [kubectl](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#downloads-for-v183) 1.8.0+
 
 ## Generate a GitHub API Token
 
