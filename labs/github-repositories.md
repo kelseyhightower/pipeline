@@ -1,6 +1,6 @@
 # Setup the GitHub Repositories
 
-In this section you will create a set of GitHub repositories which hold the Cloud Builder [build requests](https://cloud.google.com/container-builder/docs/concepts/build-requests) and the pipeline application code, a set of [Cloud Source Repositories](https://cloud.google.com/source-repositories) to mirror them to your GCP project, and provision a GitHub webhook to keep them synchronized.
+In this section you will create a set of GitHub repositories which hold the Cloud Builder [build requests](https://cloud.google.com/cloud-build/docs/build-config) and the pipeline application code, a set of [Cloud Source Repositories](https://cloud.google.com/source-repositories) to mirror them to your GCP project, and provision a GitHub webhook to keep them synchronized.
 
 ## Fork the Pipeline Application and Infrastructure Repositories
 
@@ -40,7 +40,7 @@ At this point the pipeline application and infrastructure repositories have been
 
 ## Mirror GitHub Repositories to Cloud Source Repositories
 
-Currently Container Builder only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create the Cloud Source Repositories that will mirror each of the GitHub repositories created in the previous section.
+Currently Cloud Build only supports build triggers on [Cloud Source Repositories](https://cloud.google.com/source-repositories)(CSR). In this section you will create the Cloud Source Repositories that will mirror each of the GitHub repositories created in the previous section.
 
 Set the list of repository names:
 
@@ -150,4 +150,4 @@ done
 
 Each GitHub repositories is now set to send push events to the `reposync` webhook.
 
-Next: [Container Builder Build Triggers](build-triggers.md)
+Next: [Cloud Build Triggers](build-triggers.md)

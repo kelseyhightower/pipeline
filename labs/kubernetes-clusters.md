@@ -40,9 +40,9 @@ qa          us-west1-c  1.7.8-gke.0     XX.XXX.XX.XX   n1-standard-1  1.7.8-gke.
 staging     us-west1-c  1.7.8-gke.0     XX.XXX.XXX.XX  n1-standard-1  1.7.8-gke.0   1          RUNNING
 ```
 
-## Grant the Container Builder Service Account access to the Google Kubernetes Engine API
+## Grant the Cloud Build Service Account access to the Google Kubernetes Engine API
 
-The Container Builder service needs the ability to fetch GKE credentials and apply changes to each Kubernetes cluster. Grant the Container Builder service account developer access to the GKE API.
+The Cloud Build service needs the ability to fetch GKE credentials and apply changes to each Kubernetes cluster. Grant the Cloud Build service account developer access to the GKE API.
 
 ```
 PROJECT_NUMBER=$(gcloud projects describe ${PROJECT_ID} --format='value(projectNumber)')

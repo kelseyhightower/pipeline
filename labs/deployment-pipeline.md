@@ -1,8 +1,8 @@
 # The Deployment Pipeline
 
-The heavy lifting of the deployment pipeline is done by [Cloud Container Builder](https://cloud.google.com/container-builder/) and [Kubernetes](https://cloud.google.com/kubernetes-engine).
+The heavy lifting of the deployment pipeline is done by [Cloud Build](https://cloud.google.com/cloud-build) and [Kubernetes](https://cloud.google.com/kubernetes-engine).
 
-Take a moment to study the Container Builder build requests files (cloudbuild.yaml) across the various GitHub repositories to get a sense of how the pipeline fits together:
+Take a moment to study the Cloud Build requests files (cloudbuild.yaml) across the various GitHub repositories to get a sense of how the pipeline fits together:
 
 * [pipeline-application](https://github.com/kelseyhightower/pipeline-application)
 * [pipeline-infrastructure-staging](https://github.com/kelseyhightower/pipeline-infrastructure-staging)

@@ -23,7 +23,7 @@ HUB_CONFIG="${PWD}/hub"
 
 ## Encrypt the Hub Configuration File and Upload to Google Cloud Storage
 
-In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket. Preforming these tasks will make the hub configuration file securely available to any automated build steps performed by Container Builder.
+In this section you will encrypt the hub configuration file using the [Google Key Management Service](https://cloud.google.com/kms) (KMS) and upload the encrypted file to a [Google Cloud Storage](https://cloud.google.com/storage) (GCS) bucket. Preforming these tasks will make the hub configuration file securely available to any automated build steps performed by Cloud Build.
 
 ### Create a KMS Keyring and Encryption Key
 
@@ -79,9 +79,9 @@ Upload the encrypted hub configuration file to the pipeline configs GCS bucket:
 gsutil cp hub.enc gs://${PROJECT_ID}-pipeline-configs/
 ```
 
-### Grant the Container Builder Service Account Access to the GitHub Encryption Key
+### Grant the Cloud Build Service Account Access to the GitHub Encryption Key
 
-In this section you will grant access to the `github` encrypt key to the Container Builder service account. Performing these steps will enable Container Builder to decrypt the hub configuration file during any automated build.
+In this section you will grant access to the `github` encrypt key to the Cloud Build service account. Performing these steps will enable Cloud Build to decrypt the hub configuration file during any automated build.
 
 Retrieve the active GCP project number and store it in the `PROJECT_NUMBER` env var:
 
@@ -89,7 +89,7 @@ Retrieve the active GCP project number and store it in the `PROJECT_NUMBER` env 
 PROJECT_NUMBER=$(gcloud projects describe ${PROJECT_ID} --format='value(projectNumber)')
 ```
 
-Grant the Container Builder service account access to the `github` encryption key:
+Grant the Cloud Build service account access to the `github` encryption key:
 
 ```
 gcloud kms keys add-iam-policy-binding github \
